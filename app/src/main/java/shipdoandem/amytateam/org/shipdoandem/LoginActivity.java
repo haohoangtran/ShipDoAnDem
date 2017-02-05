@@ -122,12 +122,10 @@ public class LoginActivity extends AppCompatActivity {
                 parameters.putString(getString(R.string.fields), getString(R.string.fields_name));
                 request.setParameters(parameters);
                 request.executeAsync();
-
             }
 
             @Override
             public void onCancel() {
-
             }
 
             @Override
@@ -165,7 +163,6 @@ public class LoginActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("Exception", e.toString());
         }
-
         return key;
     }
 }
