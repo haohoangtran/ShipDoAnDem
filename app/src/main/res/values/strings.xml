@@ -7,11 +7,25 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="login_with_facebook">Login with Facebook</string>
     <string name="login_with_google">Login with Google</string>
-    <string name="facebook_app_id">1795077674042975</string>
+    <string name="facebook_app_id">357284681323683</string>
     <string name="name">name</string>
     <string name="id">id</string>
     <string name="email">email</string>
     <string name="link">link</string>
     <string name="fields">fields</string>
     <string name="fields_name">fields name</string>
+    <string name="title_home">Home</string>
+    <string name="most_view">Most View</string>
+    <string name="highlights">Highlights</string>
+    <string name="favorite">Favorite</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_search">Search</string>
+    <string name="title_account">Account</string>
+    <string name="home">Home</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="notification">Thông báo</string>
+    <string name="account">Tài khoản</string>
+    <string name="ship_do_an_dem">Ship Đồ Ăn Đêm</string>
+    <string name="cart">Giỏ hàng</string>
 </resources>

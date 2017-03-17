@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tl_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorHeight="2dp"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextColor="#000000">
+        <android.support.design.widget.TabItem
+            android:id="@+id/ti_most_view"
+            android:text="@string/most_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/ti_highlights"
+            android:text="@string/highlights"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/ti_favorite"
+            android:text="Favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TabLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/navigation" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/tl_tab"
+        android:layout_above="@id/navigation"
+        android:padding = "16dp"
+        android:id="@+id/rv_food"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:longClickable="true"/>
+
+</RelativeLayout>
