@@ -50,13 +50,12 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Food food) {
-        Log.e(TAG, String.format("bind: %s", food));
         Picasso.with(itemView.getContext()).load(food.getUrl()).into(ivfood);
         tvCountRate.setText((String.format("(%s nhận xét)", food.getCoutRate())));
         tvName.setText(food.getName());
         tvPercent.setText(String.format("%s", food.getPercent())+"%");
-        price.setText(food.getPriceNew());
-        priceOld.setText(food.getPriceOld());
+        price.setText(String.format("%s đ",food.getPriceNew()));
+        priceOld.setText(String.format("%s đ",food.getPriceOld()));
         rtRate.setRating(food.getRate());
     }
 }
