@@ -43,13 +43,13 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/navigation" />
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.v4.view.ViewPager
         android:layout_below="@id/tl_tab"
-        android:layout_above="@id/navigation"
-        android:padding = "16dp"
-        android:id="@+id/rv_food"
+        android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:longClickable="true"/>
+        android:layout_above="@id/navigation"/>
+
+
 
 </RelativeLayout>

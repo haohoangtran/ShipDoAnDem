@@ -39,13 +39,9 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
     TextView tvPercent;
     @BindView(R.id.bt_add_to_cart)
     Button btAddToCart;
-    //adapter dau?
 
     public FoodViewHolder(View itemView) {
         super(itemView);
-//        ivfood = (ImageView) itemView.findViewById(R.id.iv_food);
-//        price = (TextView) itemView.findViewById(R.id.tv_price);
-//        btAddToCart = (Button) itemView.findViewById(R.id.bt_add_to_cart);
         ButterKnife.bind(this, itemView);
     }
 
