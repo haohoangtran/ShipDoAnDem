@@ -52,7 +52,7 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
         tvCountRate.setText((String.format("(%s nhận xét)", food.getCoutRate())));
         tvName.setText(food.getName());
         tvPercent.setText(String.format("%s", food.getPercent())+"%");
-        price.setText(String.format("Giá mới: %s đ",food.getPriceNew()));
+        price.setText(String.format("Giá KM: %s đ",food.getPriceNew()));
         priceOld.setText(String.format("Giá cũ: %s đ",food.getPriceOld()));
         priceOld.setPaintFlags(priceOld.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
         rtRate.setRating(food.getRate());

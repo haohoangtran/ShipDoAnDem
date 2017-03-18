@@ -40,6 +40,7 @@ public class DbContext {
             @Override
             public void onResponse(Call<List<FoodRespon>> call, Response<List<FoodRespon>> response) {
                 List<FoodRespon> foodRes=response.body();
+                if (foodRes!=null)
                 for (int i = 0; i < foodRes.size(); i++) {
                     foods.add(new Food(foodRes.get(i)));
                 }
