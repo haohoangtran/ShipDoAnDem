@@ -23,7 +23,6 @@
             android:text="-33%"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
-
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
@@ -70,9 +69,9 @@
             android:layout_width="fill_parent"
             android:layout_below="@id/tv_price_old"
             android:text="43 nhận xét"
+            android:gravity="center"
             android:textSize="9sp"
             android:layout_height="wrap_content" />
-
         <Button
             android:id="@+id/bt_add_to_cart"
             android:layout_width="100dp"
