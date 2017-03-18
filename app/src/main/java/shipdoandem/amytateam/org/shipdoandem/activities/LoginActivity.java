@@ -24,6 +24,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
 import org.json.JSONObject;
+
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -71,9 +72,8 @@ public class LoginActivity extends AppCompatActivity {
 
     //Login facebook with permisstion
     public void loginFaceBook() {
-        LoginManager.getInstance().logInWithReadPermissions(loginActivity, Arrays.asList("public_profile", "user_friends","email"));
+        LoginManager.getInstance().logInWithReadPermissions(loginActivity, Arrays.asList("public_profile", "user_friends", "email"));
     }
-
 
 
     //Hàm check login facebook
@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void initFaceBook () {
+    public void initFaceBook() {
         loginResult = new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -115,11 +115,11 @@ public class LoginActivity extends AppCompatActivity {
                                 String link = object.optString(getString(R.string.link));
                                 URL imageURL = extractFacebookIcon(id);
                                 tv_test.setText(name + ";" + email);
-                                Log.d("name: ",name);
-                                Log.d("id: ",id);
-                                Log.d("email: ",email);
-                                Log.d("link: ",link);
-                                Log.d("imageURL: ",imageURL.toString());
+                                Log.d("name: ", name);
+                                Log.d("id: ", id);
+                                Log.d("email: ", email);
+                                Log.d("link: ", link);
+                                Log.d("imageURL: ", imageURL.toString());
                             }
                         });
                 Bundle parameters = new Bundle();

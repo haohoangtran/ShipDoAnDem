@@ -1,45 +1,82 @@
 package shipdoandem.amytateam.org.shipdoandem.databases.models;
 
-import android.widget.ImageView;
+import android.util.Log;
 
 /**
- * Created by DUC THANG on 3/16/2017.
+ * Created by tranh on 3/18/2017.
  */
 
 public class Food {
-    private ImageView ivFood;
-    private String price;
+    private final String TAG = Food.class.toString();
+    private String url;
+    private int coutRate;
+    private float rate;
+    private String priceNew;
+    private String priceOld;
+    private String name;
+    private int percent;
 
-    public Food(ImageView iFood, String price) {
-        this.ivFood = iFood;
-        this.price = price;
-    }
-
-    public Food(String x) {
-        this.price = x;
-    }
-
-    public ImageView getiFood() {
-        return ivFood;
-    }
-
-    public void setiFood(ImageView iFood) {
-        this.ivFood = iFood;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
+    public int getPercent() {
+        return percent;
     }
 
     @Override
     public String toString() {
         return "Food{" +
-                "ivFood=" + ivFood +
-                ", price='" + price + '\'' +
+                ", url='" + url + '\'' +
+                ", coutRate=" + coutRate +
+                ", rate=" + rate +
+                ", priceNew='" + priceNew + '\'' +
+                ", priceOld='" + priceOld + '\'' +
+                ", name='" + name + '\'' +
+                ", percent=" + percent +
                 '}';
+    }
+
+    public Food(FoodRespon foodRespon) {
+        this.url = foodRespon.getUrl();
+        this.coutRate = foodRespon.getCoutRate();
+        this.rate = foodRespon.getRate();
+        this.priceNew = foodRespon.getCointNew();
+        this.priceOld = foodRespon.getCointOld();
+        this.name = foodRespon.getName();
+        try {
+            double priceO = Integer.valueOf(priceOld);
+            double priceN = Integer.valueOf(priceNew);
+            int per = (int) (((priceN - priceO) / priceO) * 100);
+            if (per > 0) {
+                this.percent = -per;
+
+            }else
+                this.percent=per;
+        } catch (Exception e) {
+            this.percent=0;
+            Log.e(TAG, String.format("Food: %s", e.toString()) );
+        }
+    }
+
+
+    public String getUrl() {
+        return url;
+    }
+
+    public int getCoutRate() {
+        return coutRate;
+    }
+
+    public float getRate() {
+        return rate;
+    }
+
+    public String getPriceNew() {
+        return priceNew;
+    }
+
+    public String getPriceOld() {
+        return priceOld;
+    }
+
+    public String getName() {
+        return name;
     }
 }
