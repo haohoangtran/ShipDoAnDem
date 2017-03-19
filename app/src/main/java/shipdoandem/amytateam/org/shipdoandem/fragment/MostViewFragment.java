@@ -23,12 +23,13 @@ import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodFaileEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodSuccusEvent;
 
+import static android.content.ContentValues.TAG;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MostViewFragment extends Fragment{
-    private static final String TAG = MostViewFragment.class.toString();
+public class MostViewFragment extends Fragment {
     @BindView(R.id.rv_food)
     RecyclerView rvFood;
 
@@ -64,16 +65,6 @@ public class MostViewFragment extends Fragment{
             rvFood.setAdapter(foodAdapter);
             rvFood.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
         }
-
-        foodAdapter.setItemClickListener(new FoodAdapter.ItemClickListener() {
-            @Override
-            public void clickItem() {
-                Log.d(TAG, "Vào");
-                FoodInformationFragment foodInformationFragment = new FoodInformationFragment();
-                (new SceneFragment(getActivity().getSupportFragmentManager(),
-                        R.id.fl_main)).replaceFragment(foodInformationFragment, true);
-            }
-        });
     }
 
     @Subscribe

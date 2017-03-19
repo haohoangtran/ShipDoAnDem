@@ -6,14 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.greenrobot.eventbus.EventBus;
-
 import shipdoandem.amytateam.org.shipdoandem.R;
 import shipdoandem.amytateam.org.shipdoandem.adapter.viewholder.FoodViewHolder;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.FoodRespon;
-import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFoodEvent;
 
 /**
  * Created by DUC THANG on 3/16/2017.
@@ -21,15 +18,6 @@ import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFoodEvent;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     private Context context;
-    private ItemClickListener itemClickListener;
-
-    public interface ItemClickListener {
-        void clickItem();
-    }
-
-    public void setItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
 
     public FoodAdapter(Context context) {
         this.context = context;
@@ -52,16 +40,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     public void onBindViewHolder(FoodViewHolder holder, int position) {
         final Food food = DbContext.instance.allFoods().get(position);
         holder.bind(food);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(itemClickListener != null)
-                {
-                    EventBus.getDefault().postSticky(new SentFoodEvent(food));
-                    itemClickListener.clickItem();
-                }
-            }
-        });
     }
 
     @Override
