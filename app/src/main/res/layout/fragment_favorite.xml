@@ -4,8 +4,6 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/tl_tab"
-        android:layout_above="@id/navigation"
         android:padding = "16dp"
         android:id="@+id/rv_favorite"
         android:layout_width="match_parent"
