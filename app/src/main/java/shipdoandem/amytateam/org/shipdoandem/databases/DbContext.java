@@ -40,11 +40,13 @@ public class DbContext {
             @Override
             public void onResponse(Call<List<FoodRespon>> call, Response<List<FoodRespon>> response) {
                 List<FoodRespon> foodRes=response.body();
-                for (int i = 0; i < foodRes.size(); i++) {
-                    foods.add(new Food(foodRes.get(i)));
+                if (foodRes!=null) {
+                    for (int i = 0; i < foodRes.size(); i++) {
+                        foods.add(new Food(foodRes.get(i)));
+                    }
+                    Log.e(TAG, "onResponse:load xong " );
+                    EventBus.getDefault().post(new GetAllFoodSuccusEvent(response.body()));
                 }
-                Log.e(TAG, "onResponse:load xong " );
-                EventBus.getDefault().post(new GetAllFoodSuccusEvent(response.body()));
             }
 
             @Override
