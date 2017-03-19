@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +20,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import shipdoandem.amytateam.org.shipdoandem.R;
 import shipdoandem.amytateam.org.shipdoandem.adapter.FoodAdapter;
+
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodFaileEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodSuccusEvent;
+
+
+import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodFaileEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodSuccusEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.IncreaseCountCartEvent;
+
+import static android.content.ContentValues.TAG;
+
 
 
 /**
@@ -28,7 +40,6 @@ import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodSuccusEvent;
 public class MostViewFragment extends Fragment {
     @BindView(R.id.rv_food)
     RecyclerView rvFood;
-
     private ProgressDialog progress;
 
     private FoodAdapter foodAdapter = new FoodAdapter(this.getContext());
@@ -50,17 +61,36 @@ public class MostViewFragment extends Fragment {
     private void setupUI(View view) {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
+
         rvFood.setAdapter(foodAdapter);
         rvFood.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
 //        progress = ProgressDialog.show(this.getContext(), "Xin chờ",
 //                "Đang tải", true);
 //        progress.show();
+
+        Log.e(TAG, String.format("setupUI: %s", DbContext.instance.allFoods().size()) );
+
+        if(DbContext.instance.allFoods().size()==0) {
+            DbContext.instance.getAllFood();
+            progress = ProgressDialog.show(this.getContext(), "Xin chờ",
+                    "Đang tải", true);
+            progress.show();
+        }else {
+            rvFood.setAdapter(foodAdapter);
+            rvFood.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
+        }
+
     }
 
     @Subscribe
     public void onLoadFoodSuccus(GetAllFoodSuccusEvent event) {
         progress.dismiss();
+
         Toast.makeText(this.getContext(), "Thành công", Toast.LENGTH_SHORT).show();
+
+        rvFood.setAdapter(foodAdapter);
+        rvFood.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
+
     }
 
     @Override

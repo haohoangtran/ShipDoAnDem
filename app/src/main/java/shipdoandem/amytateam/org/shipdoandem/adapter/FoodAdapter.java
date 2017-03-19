@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+
 import shipdoandem.amytateam.org.shipdoandem.R;
 import shipdoandem.amytateam.org.shipdoandem.adapter.viewholder.FoodViewHolder;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.FoodRespon;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.IncreaseCountCartEvent;
 
 /**
  * Created by DUC THANG on 3/16/2017.
@@ -40,6 +43,12 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     public void onBindViewHolder(FoodViewHolder holder, int position) {
         final Food food = DbContext.instance.allFoods().get(position);
         holder.bind(food);
+        holder.getBtAddToCart().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new IncreaseCountCartEvent());
+            }
+        });
     }
 
     @Override

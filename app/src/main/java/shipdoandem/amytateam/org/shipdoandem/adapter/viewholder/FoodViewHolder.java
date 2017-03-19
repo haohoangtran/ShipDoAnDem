@@ -1,5 +1,6 @@
 package shipdoandem.amytateam.org.shipdoandem.adapter.viewholder;
 
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -40,19 +41,23 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.bt_add_to_cart)
     Button btAddToCart;
 
+    public Button getBtAddToCart() {
+        return btAddToCart;
+    }
+
     public FoodViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
     public void bind(Food food) {
-        Log.e(TAG, String.format("bind: %s", food));
         Picasso.with(itemView.getContext()).load(food.getUrl()).into(ivfood);
         tvCountRate.setText((String.format("(%s nhận xét)", food.getCoutRate())));
         tvName.setText(food.getName());
         tvPercent.setText(String.format("%s", food.getPercent())+"%");
-        price.setText(food.getPriceNew());
-        priceOld.setText(food.getPriceOld());
+        price.setText(String.format("Giá KM: %s đ",food.getPriceNew()));
+        priceOld.setText(String.format("Giá cũ: %s đ",food.getPriceOld()));
+        priceOld.setPaintFlags(priceOld.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
         rtRate.setRating(food.getRate());
     }
 }

@@ -13,7 +13,7 @@ public class FoodRespon {
     @SerializedName("cout_rate")
     private int coutRate;
     @SerializedName("rate")
-    private int rate;
+    private float rate;
     @SerializedName("coint_new")
     private String cointNew;
     @SerializedName("_id")
@@ -52,7 +52,7 @@ public class FoodRespon {
         this.coutRate = coutRate;
     }
 
-    public int getRate() {
+    public float getRate() {
         return rate;
     }
 
