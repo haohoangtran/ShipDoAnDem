@@ -52,12 +52,11 @@ public class DbContext {
             @Override
             public void onResponse(Call<List<FoodRespon>> call, Response<List<FoodRespon>> response) {
                 List<FoodRespon> foodRes=response.body();
-                if (foodRes!=null) {
-                    foods.clear();
+                if (foodRes != null) {
                     for (int i = 0; i < foodRes.size(); i++) {
                         foods.add(new Food(foodRes.get(i)));
                     }
-                    Log.e(TAG, "onResponse:load xong " );
+                    Log.e(TAG, "onResponse:load xong ");
                     EventBus.getDefault().post(new GetAllFoodSuccusEvent(response.body()));
                 }
             }
@@ -65,7 +64,7 @@ public class DbContext {
             @Override
             public void onFailure(Call<List<FoodRespon>> call, Throwable t) {
                 EventBus.getDefault().post(new GetAllFoodFaileEvent());
-                Log.e(TAG, "onFailure: lỗi" );
+                Log.e(TAG, String.format("onFailure: lỗi %s", t.toString()) );
             }
         });
     }
