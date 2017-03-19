@@ -2,6 +2,7 @@ package shipdoandem.amytateam.org.shipdoandem.fragment;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,6 +19,7 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import shipdoandem.amytateam.org.shipdoandem.R;
+import shipdoandem.amytateam.org.shipdoandem.activities.FoodInformationActivity;
 import shipdoandem.amytateam.org.shipdoandem.adapter.FoodAdapter;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodFaileEvent;
@@ -69,11 +71,16 @@ public class MostViewFragment extends Fragment{
             @Override
             public void clickItem() {
                 Log.d(TAG, "Vào");
-                FoodInformationFragment foodInformationFragment = new FoodInformationFragment();
-                (new SceneFragment(getActivity().getSupportFragmentManager(),
-                        R.id.fl_main)).replaceFragment(foodInformationFragment, true);
+                gotoFoodInformationActivity();
+
             }
         });
+    }
+
+    public void gotoFoodInformationActivity()
+    {
+        Intent intent = new Intent(this.getContext(), FoodInformationActivity.class);
+        startActivity(intent);
     }
 
     @Subscribe

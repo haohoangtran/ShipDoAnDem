@@ -1,11 +1,15 @@
-package shipdoandem.amytateam.org.shipdoandem.fragment;
+package shipdoandem.amytateam.org.shipdoandem.activities;
 
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v7.widget.ActionBarOverlayLayout;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -22,8 +26,9 @@ import butterknife.ButterKnife;
 import shipdoandem.amytateam.org.shipdoandem.R;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFoodEvent;
+import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
 
-public class FoodInformationFragment extends Fragment {
+public class FoodInformationActivity extends AppCompatActivity {
     @BindView(R.id.iv_food_ift)
     ImageView ivFood;
     @BindView(R.id.tv_name_food)
@@ -43,31 +48,30 @@ public class FoodInformationFragment extends Fragment {
     ImageButton ibFavoriteBlack;
     @BindView(R.id.ib_share)
     ImageButton ibShare;
+
     int visiable = View.INVISIBLE;
 
-    public FoodInformationFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_food_information, container, false);
-        setupUI(view);
-        return view;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_food_information);
+        setupUI();
     }
 
-    private void setupUI(View view) {
+    private void setupUI() {
         EventBus.getDefault().register(this);
-        ButterKnife.bind(this, view);
-        Picasso.with(this.getContext()).load(food.getUrl()).into(ivFood);
+        ButterKnife.bind(this);
+
         tvName.setText(food.getName());
+
+        Utils.setTitleActionBar(this, tvName.getText().toString());
+
+        Picasso.with(this).load(food.getUrl()).into(ivFood);
         tvPriceNew.setText(food.getPriceNew()+" VND ");
         tvPriceOld.setText(food.getPriceOld()+" VND");
         tvPriceOld.setPaintFlags(tvPriceOld.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
         tvPercent.setText(food.getPercent()+"%");
+
         rbFood.setRating(food.getRate());
         ibFavoriteWhile.setOnClickListener(new View.OnClickListener() {
             @Override

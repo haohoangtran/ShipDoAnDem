@@ -4,16 +4,16 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.pager.Pager;
 import shipdoandem.amytateam.org.shipdoandem.utils.BottomNavigationHelper;
 import shipdoandem.amytateam.org.shipdoandem.R;
+import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
 
@@ -32,8 +32,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         ButterKnife.bind(this);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationHelper.disableShiftMode(navigation);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_actionbar_layout);
+
+        Utils.setTitleActionBar(this, "Ship Đồ Ăn Đêm");
+
         //Creating our pager adapter
         Pager adapter = new Pager(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
