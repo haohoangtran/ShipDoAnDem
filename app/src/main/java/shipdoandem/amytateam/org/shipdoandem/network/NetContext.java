@@ -38,8 +38,6 @@ public class NetContext {
                 .baseUrl("https://amitat1.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-
     }
 
     class LoggerInterceptor implements Interceptor {
@@ -87,7 +85,6 @@ public class NetContext {
         Buffer buffer = source.buffer();
         return buffer.clone().readString(Charset.forName("UTF-8"));
     }
-
 
     public <T> T create(Class<T> classz) {
         return retrofit.create(classz);
