@@ -13,6 +13,7 @@ import shipdoandem.amytateam.org.shipdoandem.adapter.viewholder.FoodViewHolder;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.FoodRespon;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.IncreaseCountCartEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFoodEvent;
 
 /**
@@ -50,7 +51,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
 
     @Override
     public void onBindViewHolder(FoodViewHolder holder, int position) {
-        final Food food = DbContext.instance.allFoods().get(position);
+        final Food food = DbContext.getInstance().allFoods().get(position);
         holder.bind(food);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,10 +63,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                 }
             }
         });
+        holder.getBtAddToCart().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new IncreaseCountCartEvent(food));
+            }
+        });
     }
-
     @Override
     public int getItemCount() {
-        return DbContext.instance.allFoods().size();
+        return DbContext.getInstance().allFoods().size();
     }
 }

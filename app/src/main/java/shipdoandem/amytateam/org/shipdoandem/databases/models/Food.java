@@ -2,13 +2,17 @@ package shipdoandem.amytateam.org.shipdoandem.databases.models;
 
 import android.util.Log;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by tranh on 3/18/2017.
  */
 
-public class Food {
-    private final String TAG = Food.class.toString();
+public class Food extends RealmObject{
     private String url;
+    @PrimaryKey
+    private String id;
     private int coutRate;
     private float rate;
     private String priceNew;
@@ -18,6 +22,9 @@ public class Food {
 
     public int getPercent() {
         return percent;
+    }
+
+    public Food() {
     }
 
     @Override
@@ -33,6 +40,10 @@ public class Food {
                 '}';
     }
 
+    public String getId() {
+        return id;
+    }
+
     public Food(FoodRespon foodRespon) {
         this.url = foodRespon.getUrl();
         this.coutRate = foodRespon.getCoutRate();
@@ -40,6 +51,7 @@ public class Food {
         this.priceNew = foodRespon.getCointNew();
         this.priceOld = foodRespon.getCointOld();
         this.name = foodRespon.getName();
+        this.id=foodRespon.getId().getId();
         try {
             double priceO = Integer.valueOf(priceOld);
             double priceN = Integer.valueOf(priceNew);
@@ -51,7 +63,7 @@ public class Food {
                 this.percent=per;
         } catch (Exception e) {
             this.percent=0;
-            Log.e(TAG, String.format("Food: %s", e.toString()) );
+          //  Log.e(TAG, String.format("Food: %s", e.toString()) );
         }
     }
 

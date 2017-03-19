@@ -1,5 +1,6 @@
 package shipdoandem.amytateam.org.shipdoandem.activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -23,6 +24,7 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
+import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.IncreaseCountCartEvent;
 import shipdoandem.amytateam.org.shipdoandem.pager.Pager;
 import shipdoandem.amytateam.org.shipdoandem.utils.BottomNavigationHelper;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(this);
 
-        DbContext.instance.getAllFood();
+        DbContext.getInstance().getAllFood();
 
     }
 
@@ -115,6 +117,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         } else {
             circle.setVisibility(View.GONE);
         }
+            DbContext.getInstance().addOrUpdate(event.getFood());
+            for(Food food : DbContext.getInstance().allFoodsInCart()){
+                Log.d(TAG, String.format("doIncrease: %s", food ));
+            }
     }
 
     @Override
@@ -122,7 +128,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         switch (item.getItemId()) {
             case R.id.action_cart:
                 Log.d(TAG, "onOptionsItemSelected: ");
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

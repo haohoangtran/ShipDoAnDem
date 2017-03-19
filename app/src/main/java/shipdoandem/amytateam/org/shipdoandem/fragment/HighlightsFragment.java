@@ -53,10 +53,10 @@ public class HighlightsFragment extends Fragment {
     private void setupUI(View view) {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        Log.e(TAG, String.format("setupUI: %s", DbContext.instance.allFoods().size()) );
+        Log.e(TAG, String.format("setupUI: %s", DbContext.getInstance().allFoods().size()) );
 
-        if(DbContext.instance.allFoods().size()==0) {
-            DbContext.instance.getAllFood();
+        if(DbContext.getInstance().allFoods().size()==0) {
+            DbContext.getInstance().getAllFood();
             progress = ProgressDialog.show(this.getContext(), "Xin chờ",
                     "Đang tải", true);
             progress.show();
