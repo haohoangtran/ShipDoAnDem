@@ -10,7 +10,7 @@
         android:layout_gravity="center"
         android:text="@string/ship_do_an_dem"
         android:textColor="#ffffff"
-        android:id="@+id/title"
+        android:id="@+id/tv_title"
         android:textSize="18sp" />
 
 </LinearLayout>

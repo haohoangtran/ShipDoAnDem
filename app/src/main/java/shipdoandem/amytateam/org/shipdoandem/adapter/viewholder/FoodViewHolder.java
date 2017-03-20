@@ -1,7 +1,6 @@
 package shipdoandem.amytateam.org.shipdoandem.adapter.viewholder;
 
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +16,7 @@ import butterknife.ButterKnife;
 import shipdoandem.amytateam.org.shipdoandem.R;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.FoodRespon;
+import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
 
 /**
  * Created by DUC THANG on 3/16/2017.
@@ -26,6 +26,7 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
     private static final String TAG = FoodViewHolder.class.toString();
     @BindView(R.id.iv_food)
     ImageView ivfood;
+
     @BindView(R.id.tv_price)
     TextView price;
     @BindView(R.id.tv_price_old)
@@ -51,24 +52,27 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Food food) {
-        Log.e(TAG, String.format("bind: %s", food));
-        Picasso.with(itemView.getContext()).load(food.getUrl()).into(ivfood);
-        tvCountRate.setText((String.format("(%s nhận xét)", food.getCoutRate())));
-        tvName.setText(food.getName());
         if (food.getPercent() != 0) {
-            tvPercent.setVisibility(View.VISIBLE);
             priceOld.setVisibility(View.VISIBLE);
+            tvPercent.setVisibility(View.VISIBLE);
+            Log.e(TAG, String.format("bind: %s", food));
+            Picasso.with(itemView.getContext()).load(food.getUrl()).into(ivfood);
+            tvCountRate.setText((String.format("(%s nhận xét)", food.getCoutRate())));
+            tvName.setText(food.getName());
             tvPercent.setText(String.format("%s", food.getPercent()) + "%");
-            price.setText(String.format("Giá KM: %s đ", food.getPriceNew()));
-            priceOld.setText(String.format("Giá cũ: %s đ", food.getPriceOld()));
+            price.setText(String.format("Giá KM: %s", Utils.getPrice(food.getPriceNew())));
+            priceOld.setText(String.format("Giá cũ: %s", Utils.getPrice(food.getPriceOld())));
             priceOld.setPaintFlags(priceOld.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             rtRate.setRating(food.getRate());
         } else {
-            tvPercent.setVisibility(View.INVISIBLE);
+
             priceOld.setVisibility(View.INVISIBLE);
+            tvPercent.setVisibility(View.INVISIBLE);
+            Picasso.with(itemView.getContext()).load(food.getUrl()).into(ivfood);
+            tvCountRate.setText((String.format("(%s nhận xét)", food.getCoutRate())));
+            tvName.setText(food.getName());
+            price.setText(String.format("Giá : %s", Utils.getPrice(food.getPriceNew())));
             rtRate.setRating(food.getRate());
-            price.setText(String.format("Giá: %s đ", food.getPriceNew()));
         }
-        rtRate.setRating(food.getRate());
     }
 }

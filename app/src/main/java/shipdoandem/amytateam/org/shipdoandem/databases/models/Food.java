@@ -68,6 +68,13 @@ public class Food extends RealmObject{
         this.quantityInCart = 0;
     }
 
+    public boolean equalName(CharSequence name){
+        if (this.name.startsWith((String) name)){
+            return true;
+        }
+        return false;
+    }
+
 
     public String getUrl() {
         return url;

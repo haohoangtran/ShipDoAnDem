@@ -4,20 +4,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import shipdoandem.amytateam.org.shipdoandem.activities.MainActivity;
 import shipdoandem.amytateam.org.shipdoandem.fragment.FavoriteFragment;
 import shipdoandem.amytateam.org.shipdoandem.fragment.HighlightsFragment;
 import shipdoandem.amytateam.org.shipdoandem.fragment.MostViewFragment;
 
-/**
- * Created by DUC THANG on 3/18/2017.
- */
+
 
 public class Pager extends FragmentStatePagerAdapter {
-    int tabCout;
+    int tabCount;
 
-    public Pager(FragmentManager fm, int tabCout) {
+    public Pager(FragmentManager fm, int tabCount) {
         super(fm);
-        this.tabCout = tabCout;
+        this.tabCount = tabCount;
     }
 
     @Override
@@ -25,6 +24,7 @@ public class Pager extends FragmentStatePagerAdapter {
         switch (position)
         {
             case 0:
+
                 return new MostViewFragment();
             case 1:
                 return new HighlightsFragment();
@@ -37,6 +37,6 @@ public class Pager extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return tabCout;
+        return tabCount;
     }
 }

@@ -30,10 +30,11 @@
 
         <android.support.design.widget.TabItem
             android:id="@+id/ti_favorite"
-            android:text="Favorite"
+            android:text="@string/favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </android.support.design.widget.TabLayout>
+
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
@@ -43,12 +44,10 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/navigation" />
 
-    <android.support.v4.view.ViewPager
-        android:layout_below="@id/tl_tab"
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/navigation" />
-
-
+        <android.support.v4.view.ViewPager
+            android:layout_below="@id/tl_tab"
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/navigation"/>
 </RelativeLayout>
