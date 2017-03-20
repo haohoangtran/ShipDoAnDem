@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.baoyz.widget.PullRefreshLayout;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -38,11 +40,14 @@ public class MostViewFragment extends Fragment {
     @BindView(R.id.rv_food)
     RecyclerView rvFood;
 
-    @BindView(R.id.rl_most_view)
-    RelativeLayout rlMostView;
+//    @BindView(R.id.rl_most_view)
+//    RelativeLayout rlMostView;
 
     @BindView(R.id.iv_oops)
     ImageView ivOops;
+
+    @BindView(R.id.swipeRefreshLayout)
+    PullRefreshLayout layout;
 
     private ProgressDialog progress;
 
@@ -68,6 +73,14 @@ public class MostViewFragment extends Fragment {
         Log.e(TAG, String.format("setupUI: %s", DbContext.instance.allFoods().size()) );
 
         loadAllFood();
+
+        // listen refresh event
+        layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                DbContext.instance.getAllFood();
+            }
+        });
 
         foodAdapter.setFootInfListenner(new FoodAdapter.FootInfListenner() {
             @Override
@@ -104,6 +117,7 @@ public class MostViewFragment extends Fragment {
     @Subscribe
     public void onLoadFoodSuccus(GetAllFoodSuccusEvent event) {
         progress.dismiss();
+        layout.setRefreshing(false);
         rvFood.setAdapter(foodAdapter);
         rvFood.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
         ivOops.setVisibility(View.INVISIBLE);
@@ -119,15 +133,8 @@ public class MostViewFragment extends Fragment {
     public void onLoadDataFailed(GetAllFoodFaileEvent event) {
         Toast.makeText(this.getContext(), "Lỗi kết nối. Kiểm tra đường truyền internet!", Toast.LENGTH_SHORT).show();
         progress.dismiss();
+        layout.setRefreshing(false);
         ivOops.setVisibility(View.VISIBLE);
-        if(ivOops.getVisibility() ==  View.VISIBLE) {
-            rlMostView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    loadAllFood();
-                }
-            });
-        }
     }
 
 }
