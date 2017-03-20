@@ -55,6 +55,13 @@ public class Food {
         }
     }
 
+    public boolean equalName(CharSequence name){
+        if (this.name.startsWith((String) name)){
+            return true;
+        }
+        return false;
+    }
+
 
     public String getUrl() {
         return url;
