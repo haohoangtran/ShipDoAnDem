@@ -3,7 +3,11 @@ package shipdoandem.amytateam.org.shipdoandem.activities;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Paint;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
 
 import android.support.v7.app.AlertDialog;
@@ -26,11 +30,26 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.Format;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import shipdoandem.amytateam.org.shipdoandem.R;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
+import shipdoandem.amytateam.org.shipdoandem.databases.models.FoodRespon;
+import shipdoandem.amytateam.org.shipdoandem.databases.models.OrderFoodRespon;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodFaileEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodSuccusEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
+import shipdoandem.amytateam.org.shipdoandem.network.FoodService;
+import shipdoandem.amytateam.org.shipdoandem.network.NetContext;
 import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
 
 public class FoodInformationActivity extends AppCompatActivity {
@@ -65,6 +84,8 @@ public class FoodInformationActivity extends AppCompatActivity {
     Button ibBuy;
     Button ibCancel;
 
+    Date today;
+
     @BindView(R.id.btn_buy)
     Button btnBuy;
     TextView tvSl;
@@ -85,7 +106,12 @@ public class FoodInformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_information);
+        Date today = Calendar.getInstance().getTime();
 
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        final String date = formatter.format(today);
+
+        //final String date = today.toString();
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         dialogBuy = new Dialog(this);
@@ -148,11 +174,10 @@ public class FoodInformationActivity extends AppCompatActivity {
                 ibDecrease.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (count >= 0&&count<30) {
-                            count++;
-                        }
                         if (count==30){
                             Toast.makeText(context,"Vượt quá số lượng cho phép !",Toast.LENGTH_SHORT).show();
+                        }else {
+                            count++;
                         }
                         tvSl.setText(count+"");
 
@@ -162,6 +187,21 @@ public class FoodInformationActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
+                        OrderFoodRespon orderFoodRespon = new OrderFoodRespon("Hieukaka","123abcdef",food.getName(),date,food.getRate(),count);
+                        FoodService foodService = NetContext.instance.create(FoodService.class);
+                        foodService.addOrderFood(orderFoodRespon).enqueue(new Callback<OrderFoodRespon>() {
+                            @Override
+                            public void onResponse(Call<OrderFoodRespon> call, Response<OrderFoodRespon> response) {
+                                Log.d(FoodInformationActivity.class.toString(), String.format("onResponse: %s", response.body().toString()));
+                                Toast.makeText(context,"Đặt hàng thành công !",Toast.LENGTH_SHORT).show();
+                                dialogBuy.dismiss();
+                            }
+
+                            @Override
+                            public void onFailure(Call<OrderFoodRespon> call, Throwable t) {
+
+                            }
+                        });
                     }
                 });
 

@@ -35,7 +35,7 @@ public class NetContext {
 
         retrofit = new Retrofit.Builder()
                 .client(client)
-                .baseUrl("https://amitat1.herokuapp.com/")
+                .baseUrl("https://amita.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
