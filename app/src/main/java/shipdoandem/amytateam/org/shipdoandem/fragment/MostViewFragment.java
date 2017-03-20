@@ -82,6 +82,14 @@ public class MostViewFragment extends Fragment {
             }
         });
 
+        ivOops.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DbContext.instance.getAllFood();
+                layout.setRefreshing(true);
+            }
+        });
+
         foodAdapter.setFootInfListenner(new FoodAdapter.FootInfListenner() {
             @Override
             public void onClick() {
@@ -134,7 +142,10 @@ public class MostViewFragment extends Fragment {
         Toast.makeText(this.getContext(), "Lỗi kết nối. Kiểm tra đường truyền internet!", Toast.LENGTH_SHORT).show();
         progress.dismiss();
         layout.setRefreshing(false);
-        ivOops.setVisibility(View.VISIBLE);
+        if(DbContext.instance.allFoods().size() == 0)
+        {
+            ivOops.setVisibility(View.VISIBLE);
+        }
     }
 
 }
