@@ -12,8 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.UpdateSearchFood;
 import shipdoandem.amytateam.org.shipdoandem.pager.Pager;
 import shipdoandem.amytateam.org.shipdoandem.utils.BottomNavigationHelper;
 import shipdoandem.amytateam.org.shipdoandem.R;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId()==R.id.navigation_dashboard){
+                    EventBus.getDefault().postSticky(new UpdateSearchFood() );
                     Intent intent = new Intent(context,SearchFoodActivity.class);
                     startActivity(intent);
                 }
