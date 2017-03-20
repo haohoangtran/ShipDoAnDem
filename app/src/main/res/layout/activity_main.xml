@@ -30,7 +30,7 @@
 
         <android.support.design.widget.TabItem
             android:id="@+id/ti_favorite"
-            android:text="Favorite"
+            android:text="@string/favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </android.support.design.widget.TabLayout>

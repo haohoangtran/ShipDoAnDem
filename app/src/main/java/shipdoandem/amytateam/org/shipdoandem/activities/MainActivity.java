@@ -79,19 +79,4 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     }
 
-//    @Override
-//    public void replace(Fragment fragment, boolean addToBackstack) {
-//        if (addToBackstack) {
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fl_main, fragment)
-//                    .addToBackStack(null)
-//                    .commit();
-//        }else {
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fl_main, fragment)
-//                    .commit();
-//        }
-//    }
 }

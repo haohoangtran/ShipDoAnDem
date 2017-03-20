@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">ShipDoAnDem</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="register">Register</string>
+    <string name="username">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="register">Đăng ký</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="login_with_facebook">Login with Facebook</string>
     <string name="login_with_google">Login with Google</string>
@@ -14,15 +14,15 @@
     <string name="link">link</string>
     <string name="fields">fields</string>
     <string name="fields_name">fields name</string>
-    <string name="title_home">Home</string>
-    <string name="most_view">Most View</string>
-    <string name="highlights">Highlights</string>
-    <string name="favorite">Favorite</string>
+    <string name="title_home">Trang chính</string>
+    <string name="most_view">Hot sales</string>
+    <string name="highlights">Tất cả</string>
+    <string name="favorite">Ưa thích</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_search">Search</string>
-    <string name="title_account">Account</string>
-    <string name="home">Home</string>
+    <string name="title_notifications">Thông báo</string>
+    <string name="title_search">Tìm kiếm</string>
+    <string name="title_account">Tài khoản</string>
+    <string name="home">home</string>
     <string name="search">Tìm kiếm</string>
     <string name="notification">Thông báo</string>
     <string name="account">Tài khoản</string>
