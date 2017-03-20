@@ -88,7 +88,16 @@ public class MostViewFragment extends Fragment {
         }else {
             rvFood.setAdapter(foodAdapter);
             rvFood.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
+
         }
+        foodAdapter.setFootInfListenner(new FoodAdapter.FootInfListenner() {
+            @Override
+            public void onClick() {
+                Log.d(MostViewFragment.class.toString(), "onClick: ");
+                Intent intent = new Intent(getContext(),FoodInformationActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
     }
 
 

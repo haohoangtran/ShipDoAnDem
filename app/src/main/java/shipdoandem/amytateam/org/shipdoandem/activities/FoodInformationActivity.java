@@ -31,7 +31,6 @@ import butterknife.ButterKnife;
 import shipdoandem.amytateam.org.shipdoandem.R;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
-import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
 
 public class FoodInformationActivity extends AppCompatActivity {
     Dialog dialogBuy;
@@ -49,6 +48,8 @@ public class FoodInformationActivity extends AppCompatActivity {
     TextView tvPriceOld;
     @BindView(R.id.tv_percent_food)
     TextView tvPercent;
+    @BindView(R.id.tv_footInf)
+    TextView tvFoodInf;
     @BindView(R.id.rb_food)
     RatingBar rbFood;
     private Food food;
@@ -86,15 +87,12 @@ public class FoodInformationActivity extends AppCompatActivity {
 
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
-
         dialogBuy = new Dialog(this);
         dialogBuy.setContentView(R.layout.content_buy);
         dialogBuy.setTitle("Đặt hàng");
-
         context = this;
         Picasso.with(this).load(food.getUrl()).into(ivFood);
         tvName.setText(food.getName());
-        Utils.setTitleActionBar(this, tvName.getText().toString());
         tvPriceNew.setText(food.getPriceNew() + " VND ");
         tvPriceOld.setText(food.getPriceOld() + " VND");
         tvPriceOld.setPaintFlags(tvPriceOld.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -115,6 +113,7 @@ public class FoodInformationActivity extends AppCompatActivity {
                 ibFavoriteBlack.setVisibility(View.INVISIBLE);
             }
         });
+
 
 
         btnBuy.setOnClickListener(new View.OnClickListener() {
@@ -149,8 +148,9 @@ public class FoodInformationActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         if (count >= 0&&count<30) {
                             count++;
-                        }else {
-                            Toast.makeText(context,"Vượt quá số lượng",Toast.LENGTH_SHORT);
+                        }
+                        if (count==30){
+                            Toast.makeText(context,"Vượt quá số lượng cho phép !",Toast.LENGTH_SHORT).show();
                         }
                         tvSl.setText(count+"");
 
