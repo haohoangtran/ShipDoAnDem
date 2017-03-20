@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import shipdoandem.amytateam.org.shipdoandem.R;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
+import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
 
 public class FoodInformationActivity extends AppCompatActivity {
     Dialog dialogBuy;
@@ -93,6 +94,7 @@ public class FoodInformationActivity extends AppCompatActivity {
         context = this;
         Picasso.with(this).load(food.getUrl()).into(ivFood);
         tvName.setText(food.getName());
+        Utils.setTitleActionBar(this, tvName.getText().toString());
         tvPriceNew.setText(food.getPriceNew() + " VND ");
         tvPriceOld.setText(food.getPriceOld() + " VND");
         tvPriceOld.setPaintFlags(tvPriceOld.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);

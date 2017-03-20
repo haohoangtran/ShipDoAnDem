@@ -38,11 +38,11 @@ public class MostViewFragment extends Fragment {
     @BindView(R.id.rv_food)
     RecyclerView rvFood;
 
-    @BindView(R.id.iv_oops)
-    ImageView ivOops;
-
     @BindView(R.id.rl_most_view)
     RelativeLayout rlMostView;
+
+    @BindView(R.id.iv_oops)
+    ImageView ivOops;
 
     private ProgressDialog progress;
 

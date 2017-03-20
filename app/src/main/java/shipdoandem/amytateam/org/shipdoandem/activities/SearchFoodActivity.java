@@ -22,6 +22,7 @@ import shipdoandem.amytateam.org.shipdoandem.adapter.SearchFoodAdapter;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContextSearch;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
+import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
 
 public class SearchFoodActivity extends AppCompatActivity {
 
@@ -45,7 +46,7 @@ public class SearchFoodActivity extends AppCompatActivity {
         context = this;
         rvSreach.setAdapter(food);
         rvSreach.setLayoutManager(new GridLayoutManager(context, 2));
-
+        Utils.setTitleActionBar(this, "Tìm Kiếm Món Ăn");
         svFood.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
