@@ -41,7 +41,6 @@ public class DbContext {
             public void onResponse(Call<List<FoodRespon>> call, Response<List<FoodRespon>> response) {
                 List<FoodRespon> foodRes=response.body();
                 if (foodRes!=null) {
-                    foods.clear();
                     for (int i = 0; i < foodRes.size(); i++) {
                         foods.add(new Food(foodRes.get(i)));
                     }

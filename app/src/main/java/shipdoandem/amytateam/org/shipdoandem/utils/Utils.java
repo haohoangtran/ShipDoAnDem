@@ -1,7 +1,5 @@
 package shipdoandem.amytateam.org.shipdoandem.utils;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;

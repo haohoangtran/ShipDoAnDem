@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -20,19 +22,27 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import shipdoandem.amytateam.org.shipdoandem.R;
 import shipdoandem.amytateam.org.shipdoandem.activities.FoodInformationActivity;
+import shipdoandem.amytateam.org.shipdoandem.activities.MainActivity;
 import shipdoandem.amytateam.org.shipdoandem.adapter.FoodAdapter;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodFaileEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodSuccusEvent;
 
+import static android.content.ContentValues.TAG;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MostViewFragment extends Fragment{
-    private static final String TAG = MostViewFragment.class.toString();
+public class MostViewFragment extends Fragment {
     @BindView(R.id.rv_food)
     RecyclerView rvFood;
+
+    @BindView(R.id.iv_oops)
+    ImageView ivOops;
+
+    @BindView(R.id.rl_most_view)
+    RelativeLayout rlMostView;
 
     private ProgressDialog progress;
 
@@ -57,6 +67,19 @@ public class MostViewFragment extends Fragment{
         EventBus.getDefault().register(this);
         Log.e(TAG, String.format("setupUI: %s", DbContext.instance.allFoods().size()) );
 
+        loadAllFood();
+
+        foodAdapter.setFootInfListenner(new FoodAdapter.FootInfListenner() {
+            @Override
+            public void onClick() {
+                Log.d(MostViewFragment.class.toString(), "onClick: ");
+                Intent intent = new Intent(getContext(),FoodInformationActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+    }
+
+    public void loadAllFood() {
         if(DbContext.instance.allFoods().size()==0) {
             DbContext.instance.getAllFood();
             progress = ProgressDialog.show(this.getContext(), "Xin chờ",
@@ -66,28 +89,15 @@ public class MostViewFragment extends Fragment{
             rvFood.setAdapter(foodAdapter);
             rvFood.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
         }
-
-        foodAdapter.setItemClickListener(new FoodAdapter.ItemClickListener() {
-            @Override
-            public void clickItem() {
-                Log.d(TAG, "Vào");
-                gotoFoodInformationActivity();
-
-            }
-        });
     }
 
-    public void gotoFoodInformationActivity()
-    {
-        Intent intent = new Intent(this.getContext(), FoodInformationActivity.class);
-        startActivity(intent);
-    }
 
     @Subscribe
     public void onLoadFoodSuccus(GetAllFoodSuccusEvent event) {
         progress.dismiss();
         rvFood.setAdapter(foodAdapter);
         rvFood.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
+        ivOops.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -98,7 +108,17 @@ public class MostViewFragment extends Fragment{
 
     @Subscribe
     public void onLoadDataFailed(GetAllFoodFaileEvent event) {
-        Toast.makeText(this.getContext(), "Load thất bại, mạng mẽo như beep", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getContext(), "Lỗi kết nối. Kiểm tra đường truyền internet!", Toast.LENGTH_SHORT).show();
         progress.dismiss();
+        ivOops.setVisibility(View.VISIBLE);
+        if(ivOops.getVisibility() ==  View.VISIBLE) {
+            rlMostView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loadAllFood();
+                }
+            });
+        }
     }
+
 }

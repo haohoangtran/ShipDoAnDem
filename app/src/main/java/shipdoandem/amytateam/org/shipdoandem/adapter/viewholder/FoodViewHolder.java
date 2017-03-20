@@ -47,6 +47,7 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Food food) {
+        Log.e(TAG, String.format("bind: %s", food));
         Picasso.with(itemView.getContext()).load(food.getUrl()).into(ivfood);
         tvCountRate.setText((String.format("(%s nhận xét)", food.getCoutRate())));
         tvName.setText(food.getName());

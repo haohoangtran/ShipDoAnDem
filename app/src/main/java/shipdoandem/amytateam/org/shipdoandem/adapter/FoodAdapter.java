@@ -1,6 +1,7 @@
 package shipdoandem.amytateam.org.shipdoandem.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,11 @@ import android.view.ViewGroup;
 import org.greenrobot.eventbus.EventBus;
 
 import shipdoandem.amytateam.org.shipdoandem.R;
+import shipdoandem.amytateam.org.shipdoandem.activities.FoodInformationActivity;
 import shipdoandem.amytateam.org.shipdoandem.adapter.viewholder.FoodViewHolder;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
-import shipdoandem.amytateam.org.shipdoandem.databases.models.FoodRespon;
-import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFoodEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
 
 /**
  * Created by DUC THANG on 3/16/2017.
@@ -21,15 +22,6 @@ import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFoodEvent;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     private Context context;
-    private ItemClickListener itemClickListener;
-
-    public interface ItemClickListener {
-        void clickItem();
-    }
-
-    public void setItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
 
     public FoodAdapter(Context context) {
         this.context = context;
@@ -38,6 +30,16 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     public Context getContext() {
 
         return context;
+    }
+
+    public interface FootInfListenner{
+        void onClick();
+    }
+
+    private FootInfListenner footInfListenner;
+
+    public void setFootInfListenner(FootInfListenner footInfListenner) {
+        this.footInfListenner = footInfListenner;
     }
 
     @Override
@@ -55,11 +57,12 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(itemClickListener != null)
-                {
-                    EventBus.getDefault().postSticky(new SentFoodEvent(food));
-                    itemClickListener.clickItem();
+                EventBus.getDefault().postSticky(new SentFood(food));
+                if (footInfListenner!=null){
+                    footInfListenner.onClick();
                 }
+
+
             }
         });
     }
