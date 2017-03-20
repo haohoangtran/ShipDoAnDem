@@ -19,7 +19,7 @@ public class Food extends RealmObject{
     private String priceOld;
     private String name;
     private int percent;
-
+    private int quantityInCart;
     public int getPercent() {
         return percent;
     }
@@ -65,6 +65,7 @@ public class Food extends RealmObject{
             this.percent=0;
           //  Log.e(TAG, String.format("Food: %s", e.toString()) );
         }
+        this.quantityInCart = 0;
     }
 
 
@@ -90,5 +91,13 @@ public class Food extends RealmObject{
 
     public String getName() {
         return name;
+    }
+
+    public int getQuantityInCart() {
+        return quantityInCart;
+    }
+
+    public void setQuantityInCart(int quantityInCart) {
+        this.quantityInCart = quantityInCart;
     }
 }

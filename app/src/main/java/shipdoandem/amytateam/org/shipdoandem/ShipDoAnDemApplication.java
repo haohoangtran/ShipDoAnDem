@@ -1,6 +1,7 @@
 package shipdoandem.amytateam.org.shipdoandem;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 
@@ -13,5 +14,6 @@ public class ShipDoAnDemApplication extends Application {
     public void onCreate() {
         super.onCreate();
         DbContext.setInstance(this);
+        SharePref.setInstance(this);
     }
 }

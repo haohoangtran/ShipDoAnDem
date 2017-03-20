@@ -85,4 +85,11 @@ public class DbContext {
         realm.where(Food.class).equalTo("id",food.getId()).findFirst().deleteFromRealm();
         realm.commitTransaction();
     }
+    public void changeQuanlity(Food food, int a){
+
+        realm.beginTransaction();
+        food.setQuantityInCart(food.getQuantityInCart() + a);
+        realm.copyToRealmOrUpdate(food);
+        realm.commitTransaction();
+    }
 }

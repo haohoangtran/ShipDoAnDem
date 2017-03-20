@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import shipdoandem.amytateam.org.shipdoandem.R;
+import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 
 /**
@@ -30,16 +31,42 @@ public class FoodInCartViewHolder extends RecyclerView.ViewHolder {
     TextView tvName;
     @BindView(R.id.tv_percent)
     TextView tvPercent;
+    @BindView(R.id.bt_increase)
+    Button btIncrease;
+    @BindView(R.id.bt_decrease)
+    Button btDecrease;
+    @BindView(R.id.tv_count)
+    TextView tvCount;
+    @BindView(R.id.iv_delete)
+    ImageView ivDelete;
+
+    public ImageView getIvDelete() {
+        return ivDelete;
+    }
+
+    public Button getBtIncrease() {
+        return btIncrease;
+    }
+
+    public Button getBtDecrease() {
+        return btDecrease;
+    }
+
     public FoodInCartViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this,itemView);
     }
     public void bind(Food food) {
+//        if(food.getQuantityInCart() == 0){
+//            DbContext.getInstance().delete(food);
+//            return;
+//        }
         Picasso.with(itemView.getContext()).load(food.getUrl()).into(ivfood);
         tvName.setText(food.getName());
         tvPercent.setText(String.format("%s", food.getPercent())+"%");
         price.setText(String.format("%s đ",food.getPriceNew()));
         priceOld.setText(String.format("%s đ",food.getPriceOld()));
         priceOld.setPaintFlags(priceOld.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+        tvCount.setText(String.format("%s",food.getQuantityInCart()));
     }
 }

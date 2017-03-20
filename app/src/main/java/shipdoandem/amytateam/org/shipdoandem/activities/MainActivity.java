@@ -23,6 +23,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import shipdoandem.amytateam.org.shipdoandem.SharePref;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.IncreaseCountCartEvent;
@@ -33,7 +34,7 @@ import shipdoandem.amytateam.org.shipdoandem.R;
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
     private static final String TAG = MainActivity.class.toString();
-    int count = 0;
+    int count;
     @BindView(R.id.pager)
     ViewPager viewPager;
 
@@ -75,13 +76,29 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     }
 
     @Override
+    protected void onRestart() {
+        count = SharePref.instance.getSharedPreferences().getInt("COUNT", 0);
+        if (0 < count) {
+            countTextView.setText(String.valueOf(count));
+            circle.setVisibility(View.VISIBLE);
+        } else {
+            circle.setVisibility(View.GONE);
+        }
+        super.onRestart();
+    }
+
+    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         final MenuItem alertMenuItem = menu.findItem(R.id.action_cart);
         FrameLayout rootView = (FrameLayout) alertMenuItem.getActionView();
 
         circle = (FrameLayout) rootView.findViewById(R.id.fl_noti);
-        countTextView = (TextView) rootView.findViewById(R.id.count);
-        if (count <= 0) {
+        countTextView = (TextView) rootView.findViewById(R.id.tv_count);
+        count = SharePref.instance.getSharedPreferences().getInt("COUNT", 0);
+        if (0 < count) {
+            countTextView.setText(String.valueOf(count));
+            circle.setVisibility(View.VISIBLE);
+        } else {
             circle.setVisibility(View.GONE);
         }
         rootView.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +127,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     @Subscribe
     public void doIncrease(IncreaseCountCartEvent event) {
+        count = SharePref.instance.getSharedPreferences().getInt("COUNT", 0);
         count++;
+        SharePref.instance.getSharedPreferences().edit().putInt("COUNT", count).commit();
+        Log.d(TAG, String.format("doIncrease: %s", count ));
         if (0 < count) {
             countTextView.setText(String.valueOf(count));
             circle.setVisibility(View.VISIBLE);
@@ -118,9 +138,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             circle.setVisibility(View.GONE);
         }
             DbContext.getInstance().addOrUpdate(event.getFood());
-            for(Food food : DbContext.getInstance().allFoodsInCart()){
-                Log.d(TAG, String.format("doIncrease: %s", food ));
-            }
+
     }
 
     @Override
