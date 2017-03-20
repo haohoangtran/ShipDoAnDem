@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import shipdoandem.amytateam.org.shipdoandem.R;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.FoodRespon;
+import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
 
 /**
  * Created by DUC THANG on 3/16/2017.
@@ -47,14 +48,27 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Food food) {
-        Log.e(TAG, String.format("bind: %s", food));
-        Picasso.with(itemView.getContext()).load(food.getUrl()).into(ivfood);
-        tvCountRate.setText((String.format("(%s nhận xét)", food.getCoutRate())));
-        tvName.setText(food.getName());
-        tvPercent.setText(String.format("%s", food.getPercent())+"%");
-        price.setText(String.format("Giá KM: %s đ",food.getPriceNew()));
-        priceOld.setText(String.format("Giá cũ: %s đ",food.getPriceOld()));
-        priceOld.setPaintFlags(priceOld.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-        rtRate.setRating(food.getRate());
+        if (food.getPercent() != 0) {
+            priceOld.setVisibility(View.VISIBLE);
+            tvPercent.setVisibility(View.VISIBLE);
+            Log.e(TAG, String.format("bind: %s", food));
+            Picasso.with(itemView.getContext()).load(food.getUrl()).into(ivfood);
+            tvCountRate.setText((String.format("(%s nhận xét)", food.getCoutRate())));
+            tvName.setText(food.getName());
+            tvPercent.setText(String.format("%s", food.getPercent()) + "%");
+            price.setText(String.format("Giá KM: %s", Utils.getPrice(food.getPriceNew())));
+            priceOld.setText(String.format("Giá cũ: %s", Utils.getPrice(food.getPriceOld())));
+            priceOld.setPaintFlags(priceOld.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            rtRate.setRating(food.getRate());
+        } else {
+
+            priceOld.setVisibility(View.INVISIBLE);
+            tvPercent.setVisibility(View.INVISIBLE);
+            Picasso.with(itemView.getContext()).load(food.getUrl()).into(ivfood);
+            tvCountRate.setText((String.format("(%s nhận xét)", food.getCoutRate())));
+            tvName.setText(food.getName());
+            price.setText(String.format("Giá : %s", Utils.getPrice(food.getPriceNew())));
+            rtRate.setRating(food.getRate());
+        }
     }
 }

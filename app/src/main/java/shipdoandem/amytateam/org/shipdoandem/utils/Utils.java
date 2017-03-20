@@ -6,6 +6,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 import shipdoandem.amytateam.org.shipdoandem.R;
 
 /**
@@ -26,5 +28,10 @@ public class Utils {
         abar.setDisplayShowCustomEnabled(true);
         abar.setDisplayShowTitleEnabled(false);
         abar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    public static String getPrice(String s) {
+        DecimalFormat formatter = new DecimalFormat("###,###,###");
+        return formatter.format(Double.valueOf(s)).toString() + " VND";
     }
 }
