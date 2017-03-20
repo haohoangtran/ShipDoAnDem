@@ -1,7 +1,6 @@
 package shipdoandem.amytateam.org.shipdoandem.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +9,11 @@ import android.view.ViewGroup;
 import org.greenrobot.eventbus.EventBus;
 
 import shipdoandem.amytateam.org.shipdoandem.R;
-import shipdoandem.amytateam.org.shipdoandem.activities.FoodInformationActivity;
 import shipdoandem.amytateam.org.shipdoandem.adapter.viewholder.FoodViewHolder;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
-import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
+import shipdoandem.amytateam.org.shipdoandem.databases.models.FoodRespon;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.IncreaseCountCartEvent;
 
 /**
  * Created by DUC THANG on 3/16/2017.
@@ -32,16 +31,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
         return context;
     }
 
-    public interface FootInfListenner{
-        void onClick();
-    }
-
-    private FootInfListenner footInfListenner;
-
-    public void setFootInfListenner(FootInfListenner footInfListenner) {
-        this.footInfListenner = footInfListenner;
-    }
-
     @Override
     public FoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = android.view.LayoutInflater.from(parent.getContext());
@@ -52,23 +41,20 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
 
     @Override
     public void onBindViewHolder(FoodViewHolder holder, int position) {
-        final Food food = DbContext.instance.allFoods().get(position);
+        final Food food = DbContext.getInstance().allFoods().get(position);
         holder.bind(food);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.getBtAddToCart().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                EventBus.getDefault().postSticky(new SentFood(food));
-                if (footInfListenner!=null){
-                    footInfListenner.onClick();
-                }
-
-
+            public void onClick(View view) {
+                EventBus.getDefault().post(new IncreaseCountCartEvent(food));
+                food.setQuantityInCart(1);
+                DbContext.getInstance().addOrUpdate(food);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return DbContext.instance.allFoods().size();
+        return DbContext.getInstance().allFoods().size();
     }
 }

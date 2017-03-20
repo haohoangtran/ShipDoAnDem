@@ -24,8 +24,12 @@ public class FoodRespon {
     private String name;
 
     public class Id {
+        public String getId() {
+            return id;
+        }
+
         @SerializedName("$oid")
-        public String $oid;
+        public String id;
     }
 
     public FoodRespon(String url, int rate, String cointNew, String cointOld, String name) {
