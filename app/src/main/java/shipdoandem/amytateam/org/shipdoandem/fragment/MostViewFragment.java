@@ -29,6 +29,7 @@ import shipdoandem.amytateam.org.shipdoandem.adapter.FoodAdapter;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodFaileEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodSuccusEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.OnClickItemEvent;
 
 import static android.content.ContentValues.TAG;
 
@@ -61,6 +62,7 @@ public class MostViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_most_view, container, false);
         setupUI(view);
         return view;
@@ -89,14 +91,12 @@ public class MostViewFragment extends Fragment {
             }
         });
 
-        foodAdapter.setFootInfListenner(new FoodAdapter.FootInfListenner() {
-            @Override
-            public void onClick() {
-                Log.d(MostViewFragment.class.toString(), "onClick: ");
-                Intent intent = new Intent(getContext(),FoodInformationActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
+    }
+
+    @Subscribe
+    void OnClickItem(OnClickItemEvent onClickItemEvent){
+        Intent intent = new Intent(getContext(),FoodInformationActivity.class);
+        getContext().startActivity(intent);
     }
 
     public void loadAllFood() {
@@ -110,14 +110,7 @@ public class MostViewFragment extends Fragment {
             rvFood.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
 
         }
-        foodAdapter.setFootInfListenner(new FoodAdapter.FootInfListenner() {
-            @Override
-            public void onClick() {
-                Log.d(MostViewFragment.class.toString(), "onClick: ");
-                Intent intent = new Intent(getContext(),FoodInformationActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
+
     }
 
 
@@ -143,7 +136,7 @@ public class MostViewFragment extends Fragment {
         layout.setRefreshing(false);
         if(DbContext.instance.allFoods().size() == 0)
         {
-            ivOops.setImageResource(R.drawable.ic_oops);
+            //ivOops.setImageResource(R.drawable.ic_oops);
             ivOops.setVisibility(View.VISIBLE);
         }
     }

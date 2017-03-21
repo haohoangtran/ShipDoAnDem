@@ -14,6 +14,7 @@ import shipdoandem.amytateam.org.shipdoandem.activities.FoodInformationActivity;
 import shipdoandem.amytateam.org.shipdoandem.adapter.viewholder.FoodViewHolder;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.OnClickItemEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
 
 /**
@@ -32,16 +33,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
         return context;
     }
 
-    public interface FootInfListenner{
-        void onClick();
-    }
-
-    private FootInfListenner footInfListenner;
-
-    public void setFootInfListenner(FootInfListenner footInfListenner) {
-        this.footInfListenner = footInfListenner;
-    }
-
     @Override
     public FoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = android.view.LayoutInflater.from(parent.getContext());
@@ -58,10 +49,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().postSticky(new SentFood(food));
-                if (footInfListenner!=null){
-                    footInfListenner.onClick();
-                }
-
+                EventBus.getDefault().post(new OnClickItemEvent());
 
             }
         });

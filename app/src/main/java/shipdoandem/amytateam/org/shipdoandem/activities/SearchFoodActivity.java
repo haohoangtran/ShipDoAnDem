@@ -26,8 +26,12 @@ import shipdoandem.amytateam.org.shipdoandem.adapter.SearchFoodAdapter;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContextSearch;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.OnClickItemEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.OnClickItemSearchEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.UpdateSearchFood;
 import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
+
+import static java.security.AccessController.getContext;
 
 public class SearchFoodActivity extends AppCompatActivity {
 
@@ -94,21 +98,12 @@ public class SearchFoodActivity extends AppCompatActivity {
             }
         });
 
-        foodAdapter.setFootInfListenner(new FoodAdapter.FootInfListenner() {
-            @Override
-            public void onClick() {
-                Intent intent = new Intent(context, FoodInformationActivity.class);
-                startActivity(intent);
-            }
-        });
-        food.setFootInfListenner(new FoodAdapter.FootInfListenner() {
-            @Override
-            public void onClick() {
-                Intent intent = new Intent(context, FoodInformationActivity.class);
-                startActivity(intent);
-            }
-        });
+    }
 
+    @Subscribe
+    void OnClickItem(OnClickItemSearchEvent onClickItemSearchEvent){
+        Intent intent = new Intent(context,FoodInformationActivity.class);
+        startActivity(intent);
     }
 
     @Override
