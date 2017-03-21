@@ -77,9 +77,16 @@ public class MostViewFragment extends Fragment {
         layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                DbContext.instance.getAllFood();
+                layout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        DbContext.instance.getAllFood();
+                    }
+                }, 3000);
             }
         });
+
+
 
         ivOops.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +130,8 @@ public class MostViewFragment extends Fragment {
 
     @Subscribe
     public void onLoadFoodSuccus(GetAllFoodSuccusEvent event) {
-        progress.dismiss();
+        if(progress != null)
+            progress.dismiss();
         layout.setRefreshing(false);
         rvFood.setAdapter(foodAdapter);
         rvFood.setLayoutManager(new GridLayoutManager(this.getContext(), 2));

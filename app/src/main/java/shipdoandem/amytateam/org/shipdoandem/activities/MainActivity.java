@@ -21,7 +21,7 @@ import shipdoandem.amytateam.org.shipdoandem.pager.Pager;
 import shipdoandem.amytateam.org.shipdoandem.utils.BottomNavigationHelper;
 import shipdoandem.amytateam.org.shipdoandem.R;
 
-public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
+public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
     private static final String TAG = MainActivity.class.toString();
 
@@ -38,15 +38,15 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        context =this;
+        context = this;
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId()==R.id.navigation_dashboard){
-                    EventBus.getDefault().postSticky(new UpdateSearchFood() );
-                    Intent intent = new Intent(context,SearchFoodActivity.class);
+                if (item.getItemId() == R.id.navigation_dashboard) {
+                    EventBus.getDefault().postSticky(new UpdateSearchFood());
+                    Intent intent = new Intent(context, SearchFoodActivity.class);
                     startActivity(intent);
                 }
                 return false;

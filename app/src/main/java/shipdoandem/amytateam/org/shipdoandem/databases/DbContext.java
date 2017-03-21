@@ -22,11 +22,11 @@ import shipdoandem.amytateam.org.shipdoandem.network.NetContext;
  */
 
 public class DbContext {
-    private static final String TAG=DbContext.class.toString();
+    private static final String TAG = DbContext.class.toString();
     public static final DbContext instance = new DbContext();
     private List<Food> foods;
 
-    public DbContext() {
+    private DbContext() {
         foods = new Vector<>();
     }
 
@@ -39,12 +39,12 @@ public class DbContext {
         foodService.getAllFood().enqueue(new Callback<List<FoodRespon>>() {
             @Override
             public void onResponse(Call<List<FoodRespon>> call, Response<List<FoodRespon>> response) {
-                List<FoodRespon> foodRes=response.body();
-                if (foodRes!=null) {
+                List<FoodRespon> foodRes = response.body();
+                if (foodRes != null) {
                     for (int i = 0; i < foodRes.size(); i++) {
                         foods.add(new Food(foodRes.get(i)));
                     }
-                    Log.e(TAG, "onResponse:load xong " );
+                    Log.e(TAG, "onResponse:load xong ");
                     EventBus.getDefault().post(new GetAllFoodSuccusEvent(response.body()));
                 }
             }
@@ -52,7 +52,7 @@ public class DbContext {
             @Override
             public void onFailure(Call<List<FoodRespon>> call, Throwable t) {
                 EventBus.getDefault().post(new GetAllFoodFaileEvent());
-                Log.e(TAG, "onFailure: lỗi" );
+                Log.e(TAG, "onFailure: lỗi");
             }
         });
     }
