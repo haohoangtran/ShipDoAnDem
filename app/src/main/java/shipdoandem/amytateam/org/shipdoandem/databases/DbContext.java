@@ -1,6 +1,5 @@
 package shipdoandem.amytateam.org.shipdoandem.databases;
 
-import android.content.Context;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
@@ -8,7 +7,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 import java.util.Vector;
 
-import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,24 +22,14 @@ import shipdoandem.amytateam.org.shipdoandem.network.NetContext;
  */
 
 public class DbContext {
-    private Realm realm;
     private static final String TAG=DbContext.class.toString();
-    private static DbContext instance;
-    public static DbContext getInstance(){
-        return instance;
-    }
-    public static void setInstance(Context context){
-        instance = new DbContext(context);
-    }
-    public List<Food> allFoodsInCart(){
-        return realm.where(Food.class).findAll();
-    }
+    public static final DbContext instance = new DbContext();
     private List<Food> foods;
-    private DbContext(Context context) {
+
+    public DbContext() {
         foods = new Vector<>();
-        Realm.init(context);
-        realm = Realm.getDefaultInstance();
     }
+
     public List<Food> allFoods() {
         return foods;
     }
@@ -67,29 +55,5 @@ public class DbContext {
                 Log.e(TAG, "onFailure: lỗi" );
             }
         });
-    }
-    public void addOrUpdate(Food food){
-        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(food);
-        realm.commitTransaction();
-    }
-
-    public void deleteAll(){
-        realm.beginTransaction();
-        realm.deleteAll();
-        realm.commitTransaction();
-    }
-
-    public void delete(Food food){
-        realm.beginTransaction();
-        realm.where(Food.class).equalTo("id",food.getId()).findFirst().deleteFromRealm();
-        realm.commitTransaction();
-    }
-    public void changeQuanlity(Food food, int a){
-
-        realm.beginTransaction();
-        food.setQuantityInCart(food.getQuantityInCart() + a);
-        realm.copyToRealmOrUpdate(food);
-        realm.commitTransaction();
     }
 }

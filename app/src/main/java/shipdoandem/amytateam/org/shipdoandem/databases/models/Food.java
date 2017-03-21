@@ -2,29 +2,22 @@ package shipdoandem.amytateam.org.shipdoandem.databases.models;
 
 import android.util.Log;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
 /**
  * Created by tranh on 3/18/2017.
  */
 
-public class Food extends RealmObject{
+public class Food {
+    private final String TAG = Food.class.toString();
     private String url;
-    @PrimaryKey
-    private String id;
     private int coutRate;
     private float rate;
     private String priceNew;
     private String priceOld;
     private String name;
     private int percent;
-    private int quantityInCart;
+
     public int getPercent() {
         return percent;
-    }
-
-    public Food() {
     }
 
     @Override
@@ -40,10 +33,6 @@ public class Food extends RealmObject{
                 '}';
     }
 
-    public String getId() {
-        return id;
-    }
-
     public Food(FoodRespon foodRespon) {
         this.url = foodRespon.getUrl();
         this.coutRate = foodRespon.getCoutRate();
@@ -51,7 +40,6 @@ public class Food extends RealmObject{
         this.priceNew = foodRespon.getCointNew();
         this.priceOld = foodRespon.getCointOld();
         this.name = foodRespon.getName();
-        this.id=foodRespon.getId().getId();
         try {
             double priceO = Integer.valueOf(priceOld);
             double priceN = Integer.valueOf(priceNew);
@@ -63,9 +51,8 @@ public class Food extends RealmObject{
                 this.percent=per;
         } catch (Exception e) {
             this.percent=0;
-          //  Log.e(TAG, String.format("Food: %s", e.toString()) );
+            Log.e(TAG, String.format("Food: %s", e.toString()) );
         }
-        this.quantityInCart = 0;
     }
 
     public boolean equalName(CharSequence name){
@@ -98,13 +85,5 @@ public class Food extends RealmObject{
 
     public String getName() {
         return name;
-    }
-
-    public int getQuantityInCart() {
-        return quantityInCart;
-    }
-
-    public void setQuantityInCart(int quantityInCart) {
-        this.quantityInCart = quantityInCart;
     }
 }

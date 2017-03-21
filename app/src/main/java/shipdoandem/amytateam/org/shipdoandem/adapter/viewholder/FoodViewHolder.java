@@ -42,10 +42,6 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.bt_add_to_cart)
     Button btAddToCart;
 
-    public Button getBtAddToCart() {
-        return btAddToCart;
-    }
-
     public FoodViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
