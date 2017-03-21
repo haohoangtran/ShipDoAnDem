@@ -24,7 +24,6 @@ public class Pager extends FragmentStatePagerAdapter {
         switch (position)
         {
             case 0:
-
                 return new MostViewFragment();
             case 1:
                 return new HighlightsFragment();
