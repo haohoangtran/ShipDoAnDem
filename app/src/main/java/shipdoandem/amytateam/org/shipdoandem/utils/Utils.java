@@ -27,7 +27,6 @@ public class Utils {
         abar.setCustomView(viewActionBar, params);
         abar.setDisplayShowCustomEnabled(true);
         abar.setDisplayShowTitleEnabled(false);
-        abar.setDisplayHomeAsUpEnabled(true);
     }
 
     public static String getPrice(String s) {
