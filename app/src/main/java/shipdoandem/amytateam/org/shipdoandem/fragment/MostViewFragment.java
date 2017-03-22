@@ -30,6 +30,7 @@ import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodFaileEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodSuccusEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.OnClickItemEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
 
 import static android.content.ContentValues.TAG;
 
@@ -103,6 +104,7 @@ public class MostViewFragment extends Fragment {
     @Subscribe
     void OnClickItem(OnClickItemEvent onClickItemEvent){
         Intent intent = new Intent(getContext(),FoodInformationActivity.class);
+
         getContext().startActivity(intent);
     }
 
