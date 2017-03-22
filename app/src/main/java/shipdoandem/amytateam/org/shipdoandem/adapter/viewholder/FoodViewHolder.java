@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import shipdoandem.amytateam.org.shipdoandem.R;
+import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.FoodRespon;
 import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
@@ -26,7 +27,6 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
     private static final String TAG = FoodViewHolder.class.toString();
     @BindView(R.id.iv_food)
     ImageView ivfood;
-
     @BindView(R.id.tv_price)
     TextView price;
     @BindView(R.id.tv_price_old)
@@ -42,12 +42,21 @@ public class FoodViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.bt_add_to_cart)
     Button btAddToCart;
 
+    public Button getBtAddToCart() {
+        return btAddToCart;
+    }
+
     public FoodViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
     public void bind(Food food) {
+        if (DbContext.instance.findFood(food) == null) {
+            btAddToCart.setText("Đặt hàng");
+        } else {
+            btAddToCart.setText("Đã thêm");
+        }
         if (food.getPercent() != 0) {
             priceOld.setVisibility(View.VISIBLE);
             tvPercent.setVisibility(View.VISIBLE);
