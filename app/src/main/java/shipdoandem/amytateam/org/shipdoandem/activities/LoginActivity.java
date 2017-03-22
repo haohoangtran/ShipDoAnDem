@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                         protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
                             // profile2 is the new profile
                             EventBus.getDefault().postSticky(new SentUserIdEvent(profile2.getId()));
+                            Log.d(LoginActivity.class.toString(), String.format("onCurrentProfileChanged: %s", profile2.getId()));
                             Intent intent = new Intent(context, UserInformationActivity.class);
                             startActivity(intent);
                             mProfileTracker.stopTracking();
@@ -95,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Profile profile = Profile.getCurrentProfile();
                     progressDialog.hide();
+                    Log.d(LoginActivity.class.toString(), String.format("onCurrentProfileChanged: %s", profile.getId()));
                     EventBus.getDefault().postSticky(new SentUserIdEvent(profile.getId()));
                     Intent intent = new Intent(context, UserInformationActivity.class);
                     startActivity(intent);
