@@ -54,10 +54,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/bt_login_with_facebook"
-        android:text="@string/login_with_facebook"
-        android:layout_width="match_parent"
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/bt_loginFaceBook"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:scaleType="fitCenter"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button

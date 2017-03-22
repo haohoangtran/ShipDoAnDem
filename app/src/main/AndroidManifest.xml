@@ -14,19 +14,23 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.MainActivity" />
         <activity
-            android:name=".activities.UserInformationActivity"
-            android:label="@string/app_name">
+            android:name=".activities.LoginActivity"
+            android:label="@string/app_name"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
+
         </activity>
         <activity android:name=".activities.FoodInformationActivity" />
         <activity android:name=".activities.SearchFoodActivity" />
-        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".activities.UserInformationActivity">
+        </activity>
     </application>
 
 </manifest>
