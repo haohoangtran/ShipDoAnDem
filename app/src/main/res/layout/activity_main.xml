@@ -11,14 +11,14 @@
         android:id="@+id/tl_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorColor="#FFFFFF"
         app:tabIndicatorHeight="2dp"
-        android:background="#FFFFFF"
+        android:background="@color/colorPrimary"
         app:tabPaddingStart="0dp"
         app:tabPaddingEnd="0dp"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-        app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextColor="#000000">
+        app:tabSelectedTextColor="#FFFFFF"
+        app:tabTextColor="#DED8DE">
         <android.support.design.widget.TabItem
             android:id="@+id/ti_most_view"
             android:text="@string/most_view"

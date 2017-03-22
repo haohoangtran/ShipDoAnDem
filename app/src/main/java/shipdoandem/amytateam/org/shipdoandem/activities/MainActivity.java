@@ -59,17 +59,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         getSupportActionBar().setCustomView(R.layout.custom_actionbar_layout);
         //Creating our pager adapter
         Pager adapter = new Pager(getSupportFragmentManager(), tabLayout.getTabCount());
-
-        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-            RelativeLayout relativeLayout = (RelativeLayout)
-                    LayoutInflater.from(this).inflate(R.layout.custom_tablayout, tabLayout, false);
-
-            TextView tabTextView = (TextView) relativeLayout.findViewById(R.id.tab_title);
-            tabTextView.setText(tab.getText());
-            tab.setCustomView(relativeLayout);
-            tab.select();
-        }
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(this);
