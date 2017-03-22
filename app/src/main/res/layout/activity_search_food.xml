@@ -11,7 +11,7 @@
         android:id="@+id/sv_search"
         android:layout_width="368dp"
         android:layout_height="wrap_content"
-        app:queryHint="Search"
+        app:queryHint=" Bạn tìm gì hôm nay !"
         android:clickable="true"
         android:layout_margin="6dp"
         tools:layout_editor_absoluteY="0dp"
