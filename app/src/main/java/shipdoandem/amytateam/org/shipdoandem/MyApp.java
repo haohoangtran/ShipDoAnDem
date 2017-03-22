@@ -14,6 +14,6 @@ public class MyApp extends Application {
         super.onCreate();
         DbContext.setInstance(this);
         SharePref.setInstance(this);
-//        SharePref.instance.getSharedPreferences().edit().putInt("COUNT", 0).commit();
+        SharePref.instance.getSharedPreferences().edit().putInt("COUNT", 0).commit();
     }
 }

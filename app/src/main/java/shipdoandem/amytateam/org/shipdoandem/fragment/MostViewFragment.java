@@ -30,7 +30,9 @@ import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodFaileEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodSuccusEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.OnClickItemEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.SendRequestEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.TypeRequestEvent;
 
 import static android.content.ContentValues.TAG;
 
@@ -150,5 +152,11 @@ public class MostViewFragment extends Fragment {
             ivOops.setVisibility(View.VISIBLE);
         }
     }
-
+    @Subscribe
+    public void changeButtonMode(SendRequestEvent event){
+        if(event.getTypeRequest() == TypeRequestEvent.CHANGE_BT_ADDTOCART){
+            Log.d(TAG, "changeButtonMode: hi");
+            foodAdapter.notifyDataSetChanged();
+        }
+    }
 }
