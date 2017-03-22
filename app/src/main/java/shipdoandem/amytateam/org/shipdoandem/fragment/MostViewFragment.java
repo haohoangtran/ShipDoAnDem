@@ -19,7 +19,6 @@ import com.baoyz.widget.PullRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,8 +30,7 @@ import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodFaileEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodSuccusEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.OnClickItemEvent;
-import shipdoandem.amytateam.org.shipdoandem.evenbus.SendRequestEvent;
-import shipdoandem.amytateam.org.shipdoandem.evenbus.TypeRequestEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
 
 import static android.content.ContentValues.TAG;
 
@@ -67,14 +65,13 @@ public class MostViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_most_view, container, false);
-
-        EventBus.getDefault().register(this);
         setupUI(view);
         return view;
     }
 
     private void setupUI(View view) {
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         Log.e(TAG, String.format("setupUI: %s", DbContext.instance.allFoods().size()) );
 
         loadAllFood();
@@ -107,9 +104,8 @@ public class MostViewFragment extends Fragment {
     @Subscribe
     void OnClickItem(OnClickItemEvent onClickItemEvent){
         Intent intent = new Intent(getContext(),FoodInformationActivity.class);
-        Log.d(TAG, "OnClickItem: ");
-        startActivity(intent);
-        EventBus.getDefault().removeStickyEvent(OnClickItemEvent.class);
+
+        getContext().startActivity(intent);
     }
 
     public void loadAllFood() {
@@ -154,11 +150,5 @@ public class MostViewFragment extends Fragment {
             ivOops.setVisibility(View.VISIBLE);
         }
     }
-    @Subscribe
-    public void changeButtonMode(SendRequestEvent event){
-        if(event.getTypeRequest() == TypeRequestEvent.CHANGE_BT_ADDTOCART){
-            Log.d(TAG, "changeButtonMode: hi");
-            foodAdapter.notifyDataSetChanged();
-        }
-    }
+
 }

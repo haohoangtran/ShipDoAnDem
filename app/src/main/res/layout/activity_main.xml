@@ -13,6 +13,9 @@
         android:layout_height="wrap_content"
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabIndicatorHeight="2dp"
+        android:background="#FFFFFF"
+        app:tabPaddingStart="0dp"
+        app:tabPaddingEnd="0dp"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         app:tabSelectedTextColor="@color/colorPrimary"
         app:tabTextColor="#000000">
@@ -41,6 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="#FFFFFF"
         android:layout_alignParentBottom="true"
         app:menu="@menu/navigation" />
 

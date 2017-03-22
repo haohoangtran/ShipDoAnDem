@@ -47,7 +47,7 @@ import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
 public class FoodInformationActivity extends AppCompatActivity {
     Dialog dialogBuy;
     String[] sl = new String[]{
-              "1", "2", "3", "4", "5", "6", "7", "8", "9","10","11","12","13","14","15","16"
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"
     };
     int count = 1;
     @BindView(R.id.iv_food_ift)
@@ -97,10 +97,8 @@ public class FoodInformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_information);
 
-        Date today = Calendar.getInstance().getTime();
+        final Date today = Calendar.getInstance().getTime();
 
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        final String date = formatter.format(today);
 
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
@@ -133,7 +131,6 @@ public class FoodInformationActivity extends AppCompatActivity {
         });
 
 
-
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,7 +153,7 @@ public class FoodInformationActivity extends AppCompatActivity {
                             count--;
                         }
                         Log.d("TAG", String.format("onClick: %s", count));
-                        tvSl.setText(count+"");
+                        tvSl.setText(count + "");
 
                     }
                 });
@@ -164,13 +161,13 @@ public class FoodInformationActivity extends AppCompatActivity {
                 ibDecrease.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (count >= 0&&count<30) {
+                        if (count >= 0 && count < 30) {
                             count++;
                         }
-                        if (count==30){
-                            Toast.makeText(context,"Vượt quá số lượng cho phép !",Toast.LENGTH_SHORT).show();
+                        if (count == 30) {
+                            Toast.makeText(context, "Vượt quá số lượng cho phép !", Toast.LENGTH_SHORT).show();
                         }
-                        tvSl.setText(count+"");
+                        tvSl.setText(count + "");
 
                     }
                 });
@@ -178,13 +175,14 @@ public class FoodInformationActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        OrderFoodRespon orderFoodRespon = new OrderFoodRespon("Hieukaka","123abcdef",food.getName(),date,food.getRate(),count);
+                        OrderFoodRespon orderFoodRespon = new OrderFoodRespon("Hieukaka", "123abcdef",
+                                food.getName(), today.toString(), food.getRate(), count);
                         FoodService foodService = NetContext.instance.create(FoodService.class);
                         foodService.addOrderFood(orderFoodRespon).enqueue(new Callback<OrderFoodRespon>() {
                             @Override
                             public void onResponse(Call<OrderFoodRespon> call, Response<OrderFoodRespon> response) {
                                 Log.d(FoodInformationActivity.class.toString(), String.format("onResponse: %s", response.body().toString()));
-                                Toast.makeText(context,"Đặt hàng thành công !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Đặt hàng thành công !", Toast.LENGTH_SHORT).show();
                                 dialogBuy.dismiss();
                             }
 

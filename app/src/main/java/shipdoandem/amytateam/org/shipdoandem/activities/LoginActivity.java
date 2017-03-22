@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(final LoginResult loginResult) {
                 final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
                 progressDialog.setMessage("Procesando datos...");
-                progressDialog.show();
+                //progressDialog.show();
                 if (Profile.getCurrentProfile() == null) {
                     mProfileTracker = new ProfileTracker() {
                         @Override
@@ -86,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
                             EventBus.getDefault().postSticky(new SentUserIdEvent(profile2.getId()));
                             Intent intent = new Intent(context, UserInformationActivity.class);
                             startActivity(intent);
-                            Log.v("facebook - profile", profile2.getFirstName());
                             mProfileTracker.stopTracking();
                             progressDialog.hide();
                         }
@@ -99,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
                     EventBus.getDefault().postSticky(new SentUserIdEvent(profile.getId()));
                     Intent intent = new Intent(context, UserInformationActivity.class);
                     startActivity(intent);
-                    Log.v("facebook - profile", profile.getFirstName());
                 }
 
             }
