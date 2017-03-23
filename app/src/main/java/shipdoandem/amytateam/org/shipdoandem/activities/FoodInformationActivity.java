@@ -46,9 +46,7 @@ import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
 
 public class FoodInformationActivity extends AppCompatActivity {
     Dialog dialogBuy;
-    String[] sl = new String[]{
-            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"
-    };
+
     int count = 1;
     @BindView(R.id.iv_food_ift)
     ImageView ivFood;
@@ -99,7 +97,6 @@ public class FoodInformationActivity extends AppCompatActivity {
 
         final Date today = Calendar.getInstance().getTime();
 
-
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         dialogBuy = new Dialog(this);
@@ -137,9 +134,6 @@ public class FoodInformationActivity extends AppCompatActivity {
                 dialogBuy.show();
                 ibDecrease = (ImageButton) dialogBuy.findViewById(R.id.btn_giam_sl);
                 ibIncrease = (ImageButton) dialogBuy.findViewById(R.id.btn_tang_sl);
-
-//                ibBuy = (ImageButton) dialogBuy.findViewById(R.id.btn_buy);
-//                ibCancel = (ImageButton) dialogBuy.findViewById(R.id.btn_cancel);
                 tvSl = (TextView) dialogBuy.findViewById(R.id.tv_sl_food);
                 tvSl.setText(count + "");
                 ibBuy = (Button) dialogBuy.findViewById(R.id.btn_buy_food);

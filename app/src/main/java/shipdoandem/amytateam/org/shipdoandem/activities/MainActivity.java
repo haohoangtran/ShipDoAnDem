@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Subscribe
     public void doIncrease(IncreaseCountCartEvent event) {
         count = SharePref.instance.getSharedPreferences().getInt("COUNT", 0);
-        count++;
+        count+=event.getCount();
         SharePref.instance.getSharedPreferences().edit().putInt("COUNT", count).commit();
         Log.d(TAG, String.format("doIncrease: %s", count ));
         if (0 < count) {
