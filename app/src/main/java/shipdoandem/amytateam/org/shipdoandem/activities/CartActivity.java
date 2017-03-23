@@ -22,6 +22,7 @@ import shipdoandem.amytateam.org.shipdoandem.adapter.FoodInCartAdapter;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SendRequestEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.TypeRequestEvent;
+import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
 
 public class CartActivity extends AppCompatActivity {
     @BindView(R.id.rv_food_in_cart)
@@ -34,8 +35,7 @@ public class CartActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setupUI();
-        getSupportActionBar().setTitle("Giỏ hàng");
-
+        Utils.setTitleActionBar(this, "Giỏ Hàng");
     }
     @Override
     protected void onDestroy() {

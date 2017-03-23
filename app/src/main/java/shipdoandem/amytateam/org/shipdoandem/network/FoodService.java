@@ -21,10 +21,10 @@ public interface FoodService {
     @POST("foodRespon")
     Call<FoodRespon> addNewFood(@Body FoodRespon foodRespon);
 
-    @POST("order/{userid}")
+    @POST("oder/{userid}")
     Call<FoodRespon> addOrderListFood(@Path("userid") String userId, @Body List<OrderFoodRespon> body);
 
-    @POST("order")
+    @POST("oder")
     Call<OrderFoodRespon> addOrderFood(@Body OrderFoodRespon body);
 
 }
