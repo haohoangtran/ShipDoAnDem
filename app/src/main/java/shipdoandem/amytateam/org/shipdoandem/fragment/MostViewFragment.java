@@ -44,8 +44,8 @@ public class MostViewFragment extends Fragment {
     @BindView(R.id.rv_food)
     RecyclerView rvFood;
 
-//    @BindView(R.id.rl_most_view)
-//    RelativeLayout rlMostView;
+    @BindView(R.id.rl_most_view)
+    RelativeLayout rlMostView;
 
     @BindView(R.id.iv_oops)
     ImageView ivOops;
@@ -74,6 +74,7 @@ public class MostViewFragment extends Fragment {
     private void setupUI(View view) {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
+        ivOops.setBackgroundResource(R.drawable.ic_oops);
         Log.e(TAG, String.format("setupUI: %s", DbContext.instance.allFoods().size()) );
 
         loadAllFood();
@@ -93,7 +94,7 @@ public class MostViewFragment extends Fragment {
 
 
 
-        ivOops.setOnClickListener(new View.OnClickListener() {
+        rlMostView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DbContext.instance.getAllFood();
@@ -143,14 +144,10 @@ public class MostViewFragment extends Fragment {
 
     @Subscribe
     public void onLoadDataFailed(GetAllFoodFaileEvent event) {
+        ivOops.setVisibility(View.VISIBLE);
         Toast.makeText(this.getContext(), "Lỗi kết nối. Kiểm tra đường truyền internet!", Toast.LENGTH_SHORT).show();
         progress.dismiss();
         layout.setRefreshing(false);
-        if(DbContext.instance.allFoods().size() == 0)
-        {
-            //ivOops.setImageResource(R.drawable.ic_oops);
-            ivOops.setVisibility(View.VISIBLE);
-        }
     }
     @Subscribe
     public void changeButtonMode(SendRequestEvent event){

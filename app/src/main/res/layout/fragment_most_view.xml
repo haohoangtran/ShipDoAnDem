@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.baoyz.widget.PullRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
     <ImageView
         android:id="@+id/iv_oops"
         android:layout_centerInParent="true"
         android:visibility="invisible"
         android:layout_width="100dp"
         android:layout_height="100dp" />
+
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:layout_below="@id/tl_tab"
