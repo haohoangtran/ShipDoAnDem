@@ -21,8 +21,14 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.net.URL;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import shipdoandem.amytateam.org.shipdoandem.R;
+import shipdoandem.amytateam.org.shipdoandem.databases.models.UserRegisterRespon;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentUserIdEvent;
+import shipdoandem.amytateam.org.shipdoandem.network.NetContext;
+import shipdoandem.amytateam.org.shipdoandem.network.UserService;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -83,10 +89,30 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
                             // profile2 is the new profile
-                            EventBus.getDefault().postSticky(new SentUserIdEvent(profile2.getId()));
+                            UserService userService = NetContext.instance.create(UserService.class);
+                            userService.postUserRegister(new UserRegisterRespon(profile2.getId()))
+                                    .enqueue(new Callback<UserRegisterRespon>() {
+                                        @Override
+                                        public void onResponse(Call<UserRegisterRespon> call, Response<UserRegisterRespon> response) {
+
+                                            if (response.code()==401){
+                                                //Log.d("aaa", String.format("onResponse: %s", response.body().getId().get$oid()));
+                                                Intent intent = new Intent(context, MainActivity.class);
+                                                startActivity(intent);
+                                            }else {
+                                                EventBus.getDefault().postSticky(new SentUserIdEvent(response.body().getId().get$oid()));
+                                                Intent intent = new Intent(context, UserInformationActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<UserRegisterRespon> call, Throwable t) {
+
+                                        }
+                                    });
                             Log.d(LoginActivity.class.toString(), String.format("onCurrentProfileChanged: %s", profile2.getId()));
-                            Intent intent = new Intent(context, UserInformationActivity.class);
-                            startActivity(intent);
+
                             mProfileTracker.stopTracking();
                             progressDialog.hide();
                         }
@@ -96,10 +122,30 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Profile profile = Profile.getCurrentProfile();
                     progressDialog.hide();
+                    UserService userService = NetContext.instance.create(UserService.class);
+                    userService.postUserRegister(new UserRegisterRespon(profile.getId()))
+                            .enqueue(new Callback<UserRegisterRespon>() {
+                                @Override
+                                public void onResponse(Call<UserRegisterRespon> call, Response<UserRegisterRespon> response) {
+
+                                    if (response.code()==401){
+                                        //Log.d("aaa", String.format("onResponse: %s", response.body().getId().get$oid()));
+                                        Intent intent = new Intent(context, MainActivity.class);
+                                        startActivity(intent);
+                                    }else {
+                                        EventBus.getDefault().postSticky(new SentUserIdEvent(response.body().getId().get$oid()));
+                                        Intent intent = new Intent(context, UserInformationActivity.class);
+                                        startActivity(intent);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<UserRegisterRespon> call, Throwable t) {
+
+                                }
+                            });
                     Log.d(LoginActivity.class.toString(), String.format("onCurrentProfileChanged: %s", profile.getId()));
-                    EventBus.getDefault().postSticky(new SentUserIdEvent(profile.getId()));
-                    Intent intent = new Intent(context, UserInformationActivity.class);
-                    startActivity(intent);
+
                 }
 
             }
