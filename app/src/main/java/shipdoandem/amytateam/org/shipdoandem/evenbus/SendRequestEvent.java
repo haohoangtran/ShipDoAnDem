@@ -10,6 +10,10 @@ public class SendRequestEvent {
     private TypeRequestEvent typeRequest;
     private Food food;
 
+    public SendRequestEvent(TypeRequestEvent typeRequest) {
+        this.typeRequest = typeRequest;
+    }
+
     public Food getFood() {
         return food;
     }

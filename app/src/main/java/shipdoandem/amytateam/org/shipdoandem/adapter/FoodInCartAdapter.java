@@ -35,7 +35,7 @@ public class FoodInCartAdapter extends RecyclerView.Adapter<FoodInCartViewHolder
     public void onBindViewHolder(final FoodInCartViewHolder holder, final int position) {
         final Food food = DbContext.instance.allFoodsInCart().get(position);
 
-        holder.getBtIncrease().setOnClickListener(new View.OnClickListener() {
+        holder.getIvIncrease().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (food.getQuantityInCart() < 10) {
@@ -45,10 +45,11 @@ public class FoodInCartAdapter extends RecyclerView.Adapter<FoodInCartViewHolder
                     holder.getTvCount().setText("" + quanlity);
                     int count = SharePref.instance.getCount();
                     SharePref.instance.setCount(count + 1);
+                    EventBus.getDefault().post(new SendRequestEvent(TypeRequestEvent.CHANGE_PAYMENT));
                 }
             }
         });
-        holder.getBtDecrease().setOnClickListener(new View.OnClickListener() {
+        holder.getIvDecrease().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (food.getQuantityInCart() > 1) {
@@ -57,6 +58,7 @@ public class FoodInCartAdapter extends RecyclerView.Adapter<FoodInCartViewHolder
                     holder.getTvCount().setText("" + quanlity);
                     int count = SharePref.instance.getCount();
                     SharePref.instance.setCount(count - 1);
+                    EventBus.getDefault().post(new SendRequestEvent(TypeRequestEvent.CHANGE_PAYMENT));
                 }
             }
         });

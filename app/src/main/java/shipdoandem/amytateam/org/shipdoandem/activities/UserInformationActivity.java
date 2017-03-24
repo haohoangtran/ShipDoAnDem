@@ -22,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import shipdoandem.amytateam.org.shipdoandem.R;
-import shipdoandem.amytateam.org.shipdoandem.databases.models.UserRespon;
+import shipdoandem.amytateam.org.shipdoandem.databases.models.UserUpdate;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentUserIdEvent;
 import shipdoandem.amytateam.org.shipdoandem.network.NetContext;
 import shipdoandem.amytateam.org.shipdoandem.network.UserService;
@@ -62,19 +62,19 @@ public class UserInformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                UserRespon userRespon = new UserRespon(etUserName.getText().toString(),
-                        etAddress.getText().toString(),
+                UserUpdate userRespon = new UserUpdate(etAddress.getText().toString(),
+                        etUserName.getText().toString(),
                         etPhoneNumber.getText().toString());
                 UserService userService = NetContext.instance.create(UserService.class);
-                userService.postUserInfo(userRespon).enqueue(new Callback<UserRespon>() {
+                userService.putUserUpdate(id,userRespon).enqueue(new Callback<UserUpdate>() {
                     @Override
-                    public void onResponse(Call<UserRespon> call, Response<UserRespon> response) {
+                    public void onResponse(Call<UserUpdate> call, Response<UserUpdate> response) {
                         Toast.makeText(context,"Cập nhật thành công !",Toast.LENGTH_SHORT).show();
 //                        Log.d(UserInformationActivity.class.toString(), String.format("onResponse: %s", response.body().toString()));
                     }
 
                     @Override
-                    public void onFailure(Call<UserRespon> call, Throwable t) {
+                    public void onFailure(Call<UserUpdate> call, Throwable t) {
                         Toast.makeText(context,"Lỗi cập nhật !",Toast.LENGTH_SHORT).show();
                     }
                 });

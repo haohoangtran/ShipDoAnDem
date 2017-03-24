@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <ImageButton
-            android:id="@+id/btn_tang_sl"
+            android:id="@+id/btn_giam_sl"
             app:srcCompat="@drawable/ic_remove_black_24px"
             android:layout_width="wrap_content"
             android:background="#00FFFFFF"
@@ -55,7 +55,7 @@
 
         </TextView>
         <ImageButton
-            android:id="@+id/btn_giam_sl"
+            android:id="@+id/btn_tang_sl"
             android:layout_marginTop="16dp"
             android:background="#00FFFFFF"
             app:srcCompat="@drawable/ic_add_black_24px"
@@ -63,9 +63,112 @@
             android:layout_height="wrap_content"
             />
     </LinearLayout>
+    <TextView
+        android:id="@+id/tv_infUser"
+        android:layout_below="@+id/ll_sl"
+        android:layout_margin="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chỉnh sửa thông tin người dùng"
+        android:textStyle="bold"/>
+    <RelativeLayout
+
+        android:id="@+id/rtl_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_infUser"
+        android:layout_margin="6dp">
+
+        <ImageView
+            android:id="@+id/iv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_person_black_24px" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/iv_name">
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Họ và tên (*)"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rtl_phone"
+        android:layout_margin="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rtl_username">
+
+        <ImageView
+            android:id="@+id/iv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_phone_black_24px" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/iv_phone">
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Số điện thoại (*)"
+                android:imeOptions="actionNext"
+                android:inputType="numberSigned"
+                android:maxLines="1"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rtl_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rtl_phone"
+        android:layout_margin="6dp">
+
+        <ImageView
+            android:id="@+id/iv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_location_on_black_24px" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/iv_location">
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Địa chỉ (*)"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
     <LinearLayout
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/ll_sl"
+        android:layout_below="@+id/rtl_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <Button

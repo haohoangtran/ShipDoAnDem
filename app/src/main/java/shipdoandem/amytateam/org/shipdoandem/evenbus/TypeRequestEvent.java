@@ -6,5 +6,6 @@ package shipdoandem.amytateam.org.shipdoandem.evenbus;
 
 public enum TypeRequestEvent {
     DELETE,
-    CHANGE_BT_ADDTOCART
+    CHANGE_BT_ADDTOCART,
+    CHANGE_PAYMENT
 }
