@@ -6,10 +6,12 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.FoodRespon;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.OrderFoodRespon;
-import shipdoandem.amytateam.org.shipdoandem.databases.models.UserRespon;
+import shipdoandem.amytateam.org.shipdoandem.databases.models.UserRegisterRespon;
+import shipdoandem.amytateam.org.shipdoandem.databases.models.UserUpdate;
 
 /**
  * Created by hieutran on 3/22/17.
@@ -17,9 +19,12 @@ import shipdoandem.amytateam.org.shipdoandem.databases.models.UserRespon;
 
 public interface UserService {
 
-    @GET("userinfo/{userInfo_id}")
-    Call<UserRespon> getUserInfo(@Path("userInfo_id") String userId);
+//    @GET("userinfo/{userInfo_id}")
+//    Call<UserRespon> getUserInfo(@Path("userInfo_id") String userId);
 
-    @POST("userinfo")
-    Call<UserRespon> postUserInfo( @Body UserRespon body);
+    @POST("user")
+    Call<UserRegisterRespon> postUserRegister(@Body UserRegisterRespon body);
+
+    @PUT("user/{id}")
+    Call<UserUpdate> putUserUpdate(@Path("id") String id,@Body UserUpdate body);
 }

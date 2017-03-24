@@ -52,7 +52,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     TextView tvSl;
     int count = 1;
     final Date today = Calendar.getInstance().getTime();
-    
+
     public FoodAdapter(Context context) {
         this.context = context;
     }
@@ -99,6 +99,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
         });
         if(DbContext.instance.findFood(food) == null){
             holder.getBtAddToCart().setText("Đặt hàng");
+        }else {
+            holder.getBtAddToCart().setText("Đã đặt");
+
         }
     }
 
