@@ -37,8 +37,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import shipdoandem.amytateam.org.shipdoandem.R;
+import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.OrderFoodRespon;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.IncreaseCountCartEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
 import shipdoandem.amytateam.org.shipdoandem.network.FoodService;
 import shipdoandem.amytateam.org.shipdoandem.network.NetContext;
@@ -169,22 +171,28 @@ public class FoodInformationActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        OrderFoodRespon orderFoodRespon = new OrderFoodRespon("Hieukaka", "123abcdef",
-                                food.getName(), today.toString(), food.getRate(), count);
-                        FoodService foodService = NetContext.instance.create(FoodService.class);
-                        foodService.addOrderFood(orderFoodRespon).enqueue(new Callback<OrderFoodRespon>() {
-                            @Override
-                            public void onResponse(Call<OrderFoodRespon> call, Response<OrderFoodRespon> response) {
-                                Log.d(FoodInformationActivity.class.toString(), String.format("onResponse: %s", response.body().toString()));
-                                Toast.makeText(context, "Đặt hàng thành công !", Toast.LENGTH_SHORT).show();
-                                dialogBuy.dismiss();
-                            }
+                        EventBus.getDefault().post(new IncreaseCountCartEvent(food,count));
+                        food.setQuantityInCart(count);
+                        DbContext.instance.addOrUpdate(food);
+                        Toast.makeText(context, "Đặt hàng thành công !", Toast.LENGTH_SHORT).show();
+                        dialogBuy.dismiss();
 
-                            @Override
-                            public void onFailure(Call<OrderFoodRespon> call, Throwable t) {
-
-                            }
-                        });
+//                        OrderFoodRespon orderFoodRespon = new OrderFoodRespon("Hieukaka", "123abcdef",
+//                                food.getName(), today.toString(), food.getRate(), count);
+//                        FoodService foodService = NetContext.instance.create(FoodService.class);
+//                        foodService.addOrderFood(orderFoodRespon).enqueue(new Callback<OrderFoodRespon>() {
+//                            @Override
+//                            public void onResponse(Call<OrderFoodRespon> call, Response<OrderFoodRespon> response) {
+//                                Log.d(FoodInformationActivity.class.toString(), String.format("onResponse: %s", response.body().toString()));
+//                                Toast.makeText(context, "Đặt hàng thành công !", Toast.LENGTH_SHORT).show();
+//                                dialogBuy.dismiss();
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<OrderFoodRespon> call, Throwable t) {
+//
+//                            }
+//                        });
                     }
                 });
 
