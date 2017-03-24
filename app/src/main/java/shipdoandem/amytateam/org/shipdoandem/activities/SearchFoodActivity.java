@@ -79,7 +79,7 @@ public class SearchFoodActivity extends AppCompatActivity {
                 DbContextSearch.instance.clean();
 
                 for (int i = 0; i < list.size(); i++) {
-                    if (list.get(i).equalName(nameFood)) {
+                    if (contains(list.get(i).getName(), nameFood )) {
                         Log.d(SearchFoodActivity.class.toString(), "onQueryTextChange: tìm thấy");
                         DbContextSearch.instance.addFood(list.get(i));
                     }
@@ -110,5 +110,8 @@ public class SearchFoodActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+    public boolean contains(String bigString, String subString){
+        return bigString.toLowerCase().contains(subString.toLowerCase());
     }
 }

@@ -17,16 +17,16 @@
 
         <activity android:name=".activities.LoginActivity"
             android:noHistory="true">
+
+        </activity>
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".activities.MainActivity"
-            android:label="@string/app_name">
-
         </activity>
         <activity android:name=".activities.FoodInformationActivity" />
         <activity android:name=".activities.SearchFoodActivity" />
