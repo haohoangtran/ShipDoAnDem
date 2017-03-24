@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                                         public void onResponse(Call<UserRegisterRespon> call, Response<UserRegisterRespon> response) {
 
                                             if (response.code()==401){
+                                                //Log.d("aaa", String.format("onResponse: %s", response.body().getId().get$oid()));
                                                 Intent intent = new Intent(context, MainActivity.class);
                                                 startActivity(intent);
                                             }else {
@@ -128,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onResponse(Call<UserRegisterRespon> call, Response<UserRegisterRespon> response) {
 
                                     if (response.code()==401){
+                                        //Log.d("aaa", String.format("onResponse: %s", response.body().getId().get$oid()));
                                         Intent intent = new Intent(context, MainActivity.class);
                                         startActivity(intent);
                                     }else {

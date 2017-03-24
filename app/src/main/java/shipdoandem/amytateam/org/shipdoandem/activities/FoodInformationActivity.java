@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -40,10 +41,14 @@ import shipdoandem.amytateam.org.shipdoandem.R;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.OrderFoodRespon;
+import shipdoandem.amytateam.org.shipdoandem.databases.models.UserRegisterRespon;
+import shipdoandem.amytateam.org.shipdoandem.databases.models.UserUpdate;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.IncreaseCountCartEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.SentUserIdEvent;
 import shipdoandem.amytateam.org.shipdoandem.network.FoodService;
 import shipdoandem.amytateam.org.shipdoandem.network.NetContext;
+import shipdoandem.amytateam.org.shipdoandem.network.UserService;
 import shipdoandem.amytateam.org.shipdoandem.utils.Utils;
 
 public class FoodInformationActivity extends AppCompatActivity {
@@ -75,12 +80,17 @@ public class FoodInformationActivity extends AppCompatActivity {
     ImageButton ibDecrease;
     Button ibBuy;
     Button ibCancel;
+    EditText etUserName;
+    EditText etAddress;
+    EditText etPhoneNumber;
+
 
     @BindView(R.id.btn_buy)
     Button btnBuy;
     TextView tvSl;
     int visiable = View.INVISIBLE;
     private Context context;
+    private String id;
 
 
     public int setFavorite() {
@@ -141,6 +151,9 @@ public class FoodInformationActivity extends AppCompatActivity {
                 ibBuy = (Button) dialogBuy.findViewById(R.id.btn_buy_food);
 
                 ibCancel = (Button) dialogBuy.findViewById(R.id.btn_cancel_food);
+
+                getInfoUser(dialogBuy);
+
 
                 ibIncrease.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -218,6 +231,34 @@ public class FoodInformationActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    public void getInfoUser(Dialog dialog){
+        etUserName = (EditText) dialog.findViewById(R.id.et_name);
+        etAddress = (EditText) dialog.findViewById(R.id.et_address);
+        etPhoneNumber = (EditText) dialog.findViewById(R.id.et_phone);
+
+        UserService userService =NetContext.instance.create(UserService.class);
+        userService.getUserInfo(id).enqueue(new Callback<UserUpdate>() {
+            @Override
+            public void onResponse(Call<UserUpdate> call, Response<UserUpdate> response) {
+                etUserName.setText(response.body().getName());
+                etAddress.setText(response.body().getAddress());
+                etPhoneNumber.setText(response.body().getPhoneNumber());
+            }
+
+            @Override
+            public void onFailure(Call<UserUpdate> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    void recevice(SentUserIdEvent sentUserIdEvent){
+        this.id = sentUserIdEvent.getId();
+        Log.d(UserInformationActivity.class.toString(), String.format("recevice: %s", id));
     }
 
 

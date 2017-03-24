@@ -19,8 +19,8 @@ import shipdoandem.amytateam.org.shipdoandem.databases.models.UserUpdate;
 
 public interface UserService {
 
-//    @GET("userinfo/{userInfo_id}")
-//    Call<UserRespon> getUserInfo(@Path("userInfo_id") String userId);
+    @GET("user/{id}")
+    Call<UserUpdate> getUserInfo(@Path("id") String userId);
 
     @POST("user")
     Call<UserRegisterRespon> postUserRegister(@Body UserRegisterRespon body);
