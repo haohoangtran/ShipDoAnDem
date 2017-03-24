@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <ImageButton
-            android:id="@+id/btn_tang_sl"
+            android:id="@+id/btn_giam_sl"
             app:srcCompat="@drawable/ic_remove_black_24px"
             android:layout_width="wrap_content"
             android:background="#00FFFFFF"
@@ -55,7 +55,7 @@
 
         </TextView>
         <ImageButton
-            android:id="@+id/btn_giam_sl"
+            android:id="@+id/btn_tang_sl"
             android:layout_marginTop="16dp"
             android:background="#00FFFFFF"
             app:srcCompat="@drawable/ic_add_black_24px"

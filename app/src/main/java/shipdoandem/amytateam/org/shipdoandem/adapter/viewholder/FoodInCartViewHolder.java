@@ -31,10 +31,10 @@ public class FoodInCartViewHolder extends RecyclerView.ViewHolder {
     TextView tvName;
     @BindView(R.id.tv_percent)
     TextView tvPercent;
-    @BindView(R.id.bt_increase)
-    Button btIncrease;
-    @BindView(R.id.bt_decrease)
-    Button btDecrease;
+    @BindView(R.id.iv_increase)
+    ImageView ivIncrease;
+    @BindView(R.id.iv_decrease)
+    ImageView ivDecrease;
     @BindView(R.id.tv_count)
     TextView tvCount;
     @BindView(R.id.iv_delete)
@@ -48,12 +48,12 @@ public class FoodInCartViewHolder extends RecyclerView.ViewHolder {
         return ivDelete;
     }
 
-    public Button getBtIncrease() {
-        return btIncrease;
+    public ImageView getIvIncrease() {
+        return  ivIncrease;
     }
 
-    public Button getBtDecrease() {
-        return btDecrease;
+    public ImageView getIvDecrease() {
+        return ivDecrease;
     }
 
     public FoodInCartViewHolder(View itemView) {

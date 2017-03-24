@@ -43,14 +43,15 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     private Context context;
     private Context context1;
-
+    Button addToCart;
     Dialog dialogBuy;
     ImageButton ibIncrease;
     ImageButton ibDecrease;
     Button ibBuy;
     Button ibCancel;
     TextView tvSl;
-    int count = 1;
+    int count;
+    int pos;
     final Date today = Calendar.getInstance().getTime();
     
     public FoodAdapter(Context context) {
@@ -66,6 +67,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     public FoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = android.view.LayoutInflater.from(parent.getContext());
         View itemView = layoutInflater.inflate(R.layout.item_food, parent, false);
+        addToCart = (Button) itemView.findViewById(R.id.bt_add_to_cart);
         context1 = parent.getContext();
         dialogBuy = new Dialog(parent.getContext());
         dialogBuy.setContentView(R.layout.content_buy);
@@ -76,10 +78,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final FoodViewHolder holder, int position) {
+    public void onBindViewHolder(final FoodViewHolder holder, final int position) {
         final Food food = DbContext.instance.allFoods().get(position);
         holder.bind(food);
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,9 +98,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                 }
             }
         });
-        if(DbContext.instance.findFood(food) == null){
-            holder.getBtAddToCart().setText("Đặt hàng");
-        }
+
     }
 
     @Override
@@ -110,18 +109,19 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
     public void order(final Food food){
 
         dialogBuy.show();
-        ibDecrease = (ImageButton) dialogBuy.findViewById(R.id.btn_giam_sl);
+        count = 1;
         ibIncrease = (ImageButton) dialogBuy.findViewById(R.id.btn_tang_sl);
+        ibDecrease = (ImageButton) dialogBuy.findViewById(R.id.btn_giam_sl);
         tvSl = (TextView) dialogBuy.findViewById(R.id.tv_sl_food);
         tvSl.setText(count + "");
         ibBuy = (Button) dialogBuy.findViewById(R.id.btn_buy_food);
 
         ibCancel = (Button) dialogBuy.findViewById(R.id.btn_cancel_food);
 
-        ibIncrease.setOnClickListener(new View.OnClickListener() {
+        ibDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (count > 0) {
+                if (count > 1) {
                     count--;
                 }
                 Log.d("TAG", String.format("onClick: %s", count));
@@ -130,7 +130,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
             }
         });
 
-        ibDecrease.setOnClickListener(new View.OnClickListener() {
+        ibIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (count == 30) {
@@ -146,14 +146,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
         ibBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                addToCart.setText("Đã thêm");
+                notifyDataSetChanged();
                 EventBus.getDefault().post(new IncreaseCountCartEvent(food,count));
                 food.setQuantityInCart(count);
                 DbContext.instance.addOrUpdate(food);
                 Log.d(TAG, String.format("onClick: %s", DbContext.instance.findFood(food) == null));
                 Toast.makeText(context1, "Đặt hàng thành công !", Toast.LENGTH_SHORT).show();
-                dialogBuy.dismiss();
 
+                dialogBuy.dismiss();
 
 //                OrderFoodRespon orderFoodRespon = new OrderFoodRespon("Hieukaka", "123abcdef",
 //                        food.getName(), today.toString(), food.getRate(), count);
