@@ -18,6 +18,12 @@ public interface FoodService {
     @GET("food")
     Call<List<FoodRespon>> getAllFood();
 
+    @GET("food/hot")
+    Call<List<FoodRespon>> getAllFoodHot();
+
+    @GET("food/like/{userid}")
+    Call<List<FoodRespon>> getAllFoodLike(@Path("userid") String id);
+
     @POST("foodRespon")
     Call<FoodRespon> addNewFood(@Body FoodRespon foodRespon);
 
