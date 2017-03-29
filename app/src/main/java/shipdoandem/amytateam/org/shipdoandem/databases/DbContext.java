@@ -12,9 +12,14 @@ import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import shipdoandem.amytateam.org.shipdoandem.SharePref;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.FoodRespon;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodFaileEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodHotFailedEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodHotSuccessEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodLikeFailedEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodLikeSuccessEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodSuccusEvent;
 import shipdoandem.amytateam.org.shipdoandem.network.FoodService;
 import shipdoandem.amytateam.org.shipdoandem.network.NetContext;
@@ -33,14 +38,28 @@ public class DbContext {
     public List<Food> allFoodsInCart(){
         return realm.where(Food.class).findAll();
     }
+
     private List<Food> foods;
+    private List<Food> foodsHot;
+    private List<Food> foodsLike;
+
     private DbContext(Context context) {
         foods = new Vector<>();
+        foodsHot = new Vector<>();
+        foodsLike = new Vector<>();
         Realm.init(context);
         realm = Realm.getDefaultInstance();
     }
     public List<Food> allFoods() {
         return foods;
+    }
+
+    public List<Food> getFoodsHot() {
+        return foodsHot;
+    }
+
+    public List<Food> getFoodsLike() {
+        return foodsLike;
     }
 
     public void getAllFood() {
@@ -65,6 +84,54 @@ public class DbContext {
             }
         });
     }
+
+    public void getAllFoodHot(){
+        FoodService foodService = NetContext.instance.create(FoodService.class);
+        foodService.getAllFoodHot().enqueue(new Callback<List<FoodRespon>>() {
+            @Override
+            public void onResponse(Call<List<FoodRespon>> call, Response<List<FoodRespon>> response) {
+                List<FoodRespon> foodRes=response.body();
+                if (foodRes != null) {
+                    for (int i = 0; i < foodRes.size(); i++) {
+                        foodsHot.add(new Food(foodRes.get(i)));
+                    }
+                    Log.e(TAG, "OK ngon rồi!");
+                    EventBus.getDefault().post(new GetAllFoodHotSuccessEvent(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FoodRespon>> call, Throwable t) {
+                EventBus.getDefault().post(new GetAllFoodHotFailedEvent());
+                Log.e(TAG, String.format("Lỗi rồi!", t.toString()) );
+            }
+        });
+    }
+
+    public void getAllFoodLike()
+    {
+//        FoodService foodService = NetContext.instance.create(FoodService.class);
+//        foodService.getAllFoodLike().enqueue(new Callback<List<FoodRespon>>() {
+//            @Override
+//            public void onResponse(Call<List<FoodRespon>> call, Response<List<FoodRespon>> response) {
+//                List<FoodRespon> foodRes=response.body();
+//                if (foodRes != null) {
+//                    for (int i = 0; i < foodRes.size(); i++) {
+//                        foodsHot.add(new Food(foodRes.get(i)));
+//                    }
+//                    Log.e(TAG, "OK ngon rồi!");
+//                    EventBus.getDefault().post(new GetAllFoodLikeSuccessEvent(response.body()));
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<FoodRespon>> call, Throwable t) {
+//                EventBus.getDefault().post(new GetAllFoodLikeFailedEvent());
+//                Log.e(TAG, String.format("Lỗi rồi!", t.toString()) );
+//            }
+//        });
+    }
+
     public Food findFood(Food food){
         realm.beginTransaction();
         Food food1 =  realm.where(Food.class).equalTo("id", food.getId()).findFirst();

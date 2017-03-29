@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/rl_highlight"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/tl_tab"
-        android:layout_above="@id/navigation"
-        android:padding = "16dp"
-        android:id="@+id/rv_highlights"
+    <ImageView
+        android:id="@+id/iv_oops"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:longClickable="true"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_below="@id/tl_tab"
+            android:layout_above="@id/navigation"
+            android:id="@+id/rv_highlight"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.baoyz.widget.PullRefreshLayout>
 </RelativeLayout>

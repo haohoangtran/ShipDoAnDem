@@ -30,6 +30,7 @@ import shipdoandem.amytateam.org.shipdoandem.databases.models.Food;
 import shipdoandem.amytateam.org.shipdoandem.databases.models.OrderFoodRespon;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.IncreaseCountCartEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.OnClickItemEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.OnClickItemHotEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
 import shipdoandem.amytateam.org.shipdoandem.network.FoodService;
 import shipdoandem.amytateam.org.shipdoandem.network.NetContext;
@@ -98,7 +99,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodViewHolder> {
                 }
             }
         });
-
     }
 
     @Override

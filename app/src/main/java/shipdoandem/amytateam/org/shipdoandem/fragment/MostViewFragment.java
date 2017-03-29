@@ -28,8 +28,11 @@ import shipdoandem.amytateam.org.shipdoandem.activities.MainActivity;
 import shipdoandem.amytateam.org.shipdoandem.adapter.FoodAdapter;
 import shipdoandem.amytateam.org.shipdoandem.databases.DbContext;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodFaileEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodHotFailedEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodHotSuccessEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.GetAllFoodSuccusEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.OnClickItemEvent;
+import shipdoandem.amytateam.org.shipdoandem.evenbus.OnClickItemHotEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SendRequestEvent;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.SentFood;
 import shipdoandem.amytateam.org.shipdoandem.evenbus.TypeRequestEvent;
@@ -75,7 +78,6 @@ public class MostViewFragment extends Fragment {
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
         ivOops.setBackgroundResource(R.drawable.ic_oops);
-        Log.e(TAG, String.format("setupUI: %s", DbContext.instance.allFoods().size()) );
 
         loadAllFood();
 
@@ -86,7 +88,7 @@ public class MostViewFragment extends Fragment {
                 layout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        DbContext.instance.getAllFood();
+                        DbContext.instance.getAllFoodHot();
                     }
                 }, 3000);
             }
@@ -97,7 +99,7 @@ public class MostViewFragment extends Fragment {
         rlMostView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DbContext.instance.getAllFood();
+                DbContext.instance.getAllFoodHot();
                 layout.setRefreshing(true);
             }
         });
@@ -105,29 +107,26 @@ public class MostViewFragment extends Fragment {
     }
 
     @Subscribe
-    void OnClickItem(OnClickItemEvent onClickItemEvent){
+    void OnClickItem(OnClickItemEvent event){
         Intent intent = new Intent(getContext(),FoodInformationActivity.class);
-
         getContext().startActivity(intent);
     }
 
     public void loadAllFood() {
-        if(DbContext.instance.allFoods().size()==0) {
-             DbContext.instance.getAllFood();
+        if(DbContext.instance.getFoodsHot().size()==0) {
+            DbContext.instance.getAllFoodHot();
             progress = ProgressDialog.show(this.getContext(), "Xin chờ",
-                    "Đang tải",true);
+                    "Đang tải", true);
             progress.show();
         }else {
             rvFood.setAdapter(foodAdapter);
             rvFood.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
-
         }
 
     }
 
-
     @Subscribe
-    public void onLoadFoodSuccus(GetAllFoodSuccusEvent event) {
+    public void onLoadFoodSuccess(GetAllFoodHotSuccessEvent event) {
         if(progress != null)
             progress.dismiss();
         layout.setRefreshing(false);
@@ -143,7 +142,7 @@ public class MostViewFragment extends Fragment {
     }
 
     @Subscribe
-    public void onLoadDataFailed(GetAllFoodFaileEvent event) {
+    public void onLoadDataFailed(GetAllFoodHotFailedEvent event) {
         ivOops.setVisibility(View.VISIBLE);
         Toast.makeText(this.getContext(), "Lỗi kết nối. Kiểm tra đường truyền internet!", Toast.LENGTH_SHORT).show();
         progress.dismiss();
@@ -152,7 +151,6 @@ public class MostViewFragment extends Fragment {
     @Subscribe
     public void changeButtonMode(SendRequestEvent event){
         if(event.getTypeRequest() == TypeRequestEvent.CHANGE_BT_ADDTOCART){
-            Log.d(TAG, "changeButtonMode: hi");
             foodAdapter.notifyDataSetChanged();
         }
     }
