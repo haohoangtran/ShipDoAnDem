@@ -113,9 +113,9 @@ public class MostViewFragment extends Fragment {
 
     public void loadAllFood() {
         if(DbContext.instance.allFoods().size()==0) {
-            DbContext.instance.getAllFood();
+             DbContext.instance.getAllFood();
             progress = ProgressDialog.show(this.getContext(), "Xin chờ",
-                    "Đang tải", true);
+                    "Đang tải",true);
             progress.show();
         }else {
             rvFood.setAdapter(foodAdapter);
